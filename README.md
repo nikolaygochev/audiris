@@ -121,6 +121,16 @@ audiris/
 | `npm run lint` | Run ESLint |
 | `npm run type-check` | Run TypeScript type checking |
 
+### Dev Server Helper
+
+`dev.sh` wraps `npm run dev` with start/stop/restart support:
+
+```bash
+./dev.sh start    # start in background
+./dev.sh stop     # stop
+./dev.sh restart  # restart
+```
+
 ---
 
 ## Deployment

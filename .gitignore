@@ -35,6 +35,9 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
+# Dev script
+.dev.pid
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

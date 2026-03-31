@@ -128,6 +128,14 @@ npm run lint                 # ESLint
 npm run build                # Production SSG build
 ```
 
+Use `dev.sh` for start/stop/restart convenience:
+
+```bash
+./dev.sh start
+./dev.sh stop
+./dev.sh restart
+```
+
 Deploy: push to `main` → Vercel deploys automatically.
 
 ---

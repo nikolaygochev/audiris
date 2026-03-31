@@ -6,7 +6,7 @@ import { caseStudiesPage } from '@/lib/content'
 export const metadata: Metadata = buildMetadata({
   title: 'Case Studies',
   description:
-    'Real results from real engagements. Audiris case studies coming soon — documenting the outcomes we've delivered for our clients.',
+    "Real results from real engagements. Audiris case studies coming soon — documenting the outcomes we've delivered for our clients.",
   path: '/case-studies',
 })
 

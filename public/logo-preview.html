@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Audiris — Logo Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #F8FAFC; color: #0F172A; }
+
+    h2 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 1.25rem; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 820px; margin: 2.5rem auto; padding: 0 2rem; }
+
+    .tile {
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tile-light  { background: #ffffff; border: 1px solid #E2E8F0; }
+    .tile-off    { background: #F8FAFC; border: 1px solid #E2E8F0; }
+    .tile-dark   { background: #0F172A; }
+    .tile-brand  { background: #059669; }
+    .tile-subtle { background: #ecfdf5; border: 1px solid #a7f3d0; }
+
+    .tile img, .tile object { height: 48px; display: block; }
+    .tile-mark img { height: 48px; width: 44px; }
+
+    .mark-row { display: flex; align-items: center; gap: 1.5rem; }
+    .mark-sm  { height: 32px !important; }
+    .mark-lg  { height: 64px !important; }
+
+    footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+
+<div class="grid">
+
+  <div class="tile tile-light">
+    <h2>Light background</h2>
+    <img src="logo.svg" alt="Audiris logo"/>
+  </div>
+
+  <div class="tile tile-off">
+    <h2>Off-white background</h2>
+    <img src="logo.svg" alt="Audiris logo"/>
+  </div>
+
+  <div class="tile tile-dark">
+    <h2 style="color:#475569">Dark background</h2>
+    <img src="logo-dark.svg" alt="Audiris logo dark"/>
+  </div>
+
+  <div class="tile tile-brand">
+    <h2 style="color:#d1fae5">Brand background</h2>
+    <img src="logo-dark.svg" alt="Audiris logo on brand"/>
+  </div>
+
+  <div class="tile tile-subtle" style="grid-column: span 2">
+    <h2>Mark sizes</h2>
+    <div class="mark-row">
+      <img src="logo-mark.svg" class="mark-sm" alt="small mark"/>
+      <img src="logo-mark.svg" alt="default mark"/>
+      <img src="logo-mark.svg" class="mark-lg" alt="large mark"/>
+    </div>
+  </div>
+
+  <div class="tile tile-light" style="grid-column: span 2">
+    <h2>Navbar context</h2>
+    <div style="display:flex; align-items:center; justify-content:space-between; padding: 0.75rem 1.5rem; border: 1px solid #E2E8F0; border-radius: 0.5rem; background:#fff;">
+      <img src="logo.svg" style="height:36px" alt="Audiris"/>
+      <div style="display:flex; gap:2rem; font-size:0.9rem; color:#475569;">
+        <span>Services</span><span>About</span><span>Contact</span>
+      </div>
+      <div style="background:#059669; color:#fff; padding:0.4rem 1rem; border-radius:0.4rem; font-size:0.85rem; font-weight:500;">
+        Get in touch
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Audiris — Logo Concept A · Slate + Emerald palette</footer>
+
+</body>
+</html>

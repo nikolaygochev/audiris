@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audiris — Solution Architecture</title>
+<style>
+  :root {
+    --brand:     #059669;
+    --brand-dk:  #047857;
+    --brand-lt:  #d1fae5;
+    --brand-xl:  #ecfdf5;
+    --accent:    #f59e0b;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-400: #94a3b8;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50:  #f8fafc;
+    --white:     #ffffff;
+    --red:       #ef4444;
+    --amber:     #f59e0b;
+    --blue:      #3b82f6;
+    --purple:    #8b5cf6;
+    --radius:    8px;
+    --shadow:    0 4px 16px rgba(0,0,0,.10);
+    --shadow-sm: 0 2px 6px rgba(0,0,0,.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--slate-100);
+    color: var(--slate-800);
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ────────────────────────────────────────────────────── */
+  header {
+    background: var(--slate-900);
+    color: var(--white);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .logo-mark {
+    width: 48px; height: 48px;
+    background: var(--brand);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 20px; color: white; flex-shrink: 0;
+  }
+  header h1 { font-size: 22px; font-weight: 700; }
+  header p  { font-size: 13px; color: var(--slate-400); margin-top: 2px; }
+  .badges { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: 11px; font-weight: 600; padding: 2px 10px;
+    border-radius: 20px; border: 1px solid var(--slate-700);
+    color: var(--slate-400);
+  }
+  .badge.green { background: var(--brand); color: white; border-color: var(--brand); }
+
+  /* ── NAV TABS ──────────────────────────────────────────────────── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--slate-200);
+    display: flex; gap: 0; padding: 0 48px;
+    overflow-x: auto;
+  }
+  nav button {
+    padding: 14px 20px;
+    border: none; background: none;
+    font-size: 13px; font-weight: 600;
+    color: var(--slate-600);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all .15s;
+  }
+  nav button:hover { color: var(--brand); }
+  nav button.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+  /* ── MAIN ──────────────────────────────────────────────────────── */
+  main { max-width: 1400px; margin: 0 auto; padding: 40px 48px 80px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  h2 {
+    font-size: 20px; font-weight: 700;
+    color: var(--slate-900);
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px; color: var(--slate-600);
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+
+  /* ── DIAGRAM CANVAS ────────────────────────────────────────────── */
+  .canvas {
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+
+  /* ── GENERIC BOX ───────────────────────────────────────────────── */
+  .box {
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .box .icon { font-size: 18px; flex-shrink: 0; }
+  .box .label { flex: 1; }
+  .box .sub { font-size: 11px; font-weight: 400; color: inherit; opacity: .75; display: block; margin-top: 2px; }
+
+  /* colour variants */
+  .box-green   { background: var(--brand-xl); border: 1.5px solid var(--brand);    color: var(--brand-dk); }
+  .box-dark    { background: var(--slate-800); border: 1.5px solid var(--slate-700); color: var(--white); }
+  .box-slate   { background: var(--slate-100); border: 1.5px solid var(--slate-300); color: var(--slate-700); }
+  .box-amber   { background: #fffbeb;           border: 1.5px solid var(--amber);    color: #92400e; }
+  .box-blue    { background: #eff6ff;           border: 1.5px solid var(--blue);     color: #1e3a8a; }
+  .box-purple  { background: #f5f3ff;           border: 1.5px solid var(--purple);   color: #4c1d95; }
+  .box-red     { background: #fef2f2;           border: 1.5px solid var(--red);      color: #7f1d1d; }
+  .box-white   { background: var(--white);      border: 1.5px solid var(--slate-200); color: var(--slate-700); }
+
+  /* ── CONTAINER (boundary) ──────────────────────────────────────── */
+  .boundary {
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+  }
+  .boundary-label {
+    position: absolute; top: -11px; left: 20px;
+    background: inherit;
+    padding: 0 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .b-vercel  { background: #f0fdf4; border: 2px dashed var(--brand); }
+  .b-vercel .boundary-label { color: var(--brand-dk); }
+  .b-ext     { background: #f8fafc; border: 2px dashed var(--slate-300); }
+  .b-ext .boundary-label { color: var(--slate-500); }
+  .b-dark    { background: var(--slate-900); border: 2px solid var(--slate-700); }
+  .b-dark .boundary-label { background: var(--slate-900); color: var(--slate-400); }
+
+  /* ── ARROWS ────────────────────────────────────────────────────── */
+  .arrow-row { display: flex; align-items: center; gap: 0; margin: 6px 0; }
+  .arrow-h {
+    flex: 1; height: 2px; background: var(--slate-300);
+    position: relative;
+  }
+  .arrow-h::after {
+    content: ''; position: absolute; right: 0; top: -4px;
+    border: 5px solid transparent;
+    border-left-color: var(--slate-400);
+  }
+  .arrow-label {
+    font-size: 11px; color: var(--slate-500);
+    padding: 0 8px; white-space: nowrap;
+  }
+  .arrow-down {
+    width: 2px; background: var(--slate-300); margin: 0 auto;
+    position: relative;
+  }
+  .arrow-down::after {
+    content: ''; position: absolute; bottom: 0; left: -4px;
+    border: 5px solid transparent;
+    border-top-color: var(--slate-400);
+  }
+
+  /* ── GRID LAYOUTS ──────────────────────────────────────────────── */
+  .row   { display: flex; gap: 16px; align-items: stretch; }
+  .col   { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+  /* ── C1 SYSTEM CONTEXT ─────────────────────────────────────────── */
+  .c1-actor {
+    text-align: center; padding: 20px 16px;
+    background: var(--slate-100);
+    border: 1.5px solid var(--slate-200);
+    border-radius: var(--radius);
+    font-size: 13px; font-weight: 600; color: var(--slate-700);
+  }
+  .c1-actor .icon { font-size: 28px; display: block; margin-bottom: 8px; }
+  .c1-actor .sub  { font-size: 11px; font-weight: 400; color: var(--slate-500); margin-top: 4px; }
+  .c1-system {
+    text-align: center; padding: 28px 24px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dk) 100%);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 8px 24px rgba(5,150,105,.3);
+  }
+  .c1-system .icon { font-size: 36px; display: block; margin-bottom: 12px; }
+  .c1-system h3   { font-size: 18px; font-weight: 800; }
+  .c1-system p    { font-size: 12px; opacity: .85; margin-top: 6px; }
+
+  .connector {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; padding: 0 8px;
+  }
+  .connector .line {
+    width: 2px; flex: 1; background: var(--slate-300); min-height: 20px;
+  }
+  .connector .label {
+    font-size: 10px; color: var(--slate-400); white-space: nowrap;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+
+  /* ── FLOW STEP ─────────────────────────────────────────────────── */
+  .flow-step {
+    display: flex; align-items: flex-start; gap: 16px; padding: 16px;
+    background: var(--slate-50); border: 1px solid var(--slate-200);
+    border-radius: var(--radius);
+  }
+  .flow-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--brand); color: white;
+    font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .flow-content h4 { font-size: 13px; font-weight: 700; color: var(--slate-800); }
+  .flow-content p  { font-size: 12px; color: var(--slate-600); margin-top: 2px; }
+  .flow-content code {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 11px; background: var(--slate-200);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── LAYER CARD ────────────────────────────────────────────────── */
+  .layer-card {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1.5px solid var(--slate-200);
+  }
+  .layer-header {
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 700;
+  }
+  .layer-body {
+    padding: 14px 16px;
+    font-size: 12px; color: var(--slate-600);
+    background: var(--white);
+    border-top: 1px solid var(--slate-200);
+  }
+  .layer-body ul { padding-left: 16px; }
+  .layer-body li { margin-bottom: 4px; }
+
+  /* ── ADR TABLE ─────────────────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--slate-800); color: white;
+    padding: 10px 14px; text-align: left;
+    font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--slate-200); vertical-align: top; }
+  tr:hover td { background: var(--slate-50); }
+  td:first-child { font-weight: 700; color: var(--brand-dk); white-space: nowrap; }
+  td strong { color: var(--slate-800); }
+
+  /* ── PILL ──────────────────────────────────────────────────────── */
+  .pill {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .pill-green  { background: var(--brand-lt); color: var(--brand-dk); }
+  .pill-amber  { background: #fef3c7; color: #92400e; }
+  .pill-blue   { background: #dbeafe; color: #1e3a8a; }
+  .pill-slate  { background: var(--slate-200); color: var(--slate-700); }
+
+  /* ── LEGEND ────────────────────────────────────────────────────── */
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 12px 16px;
+    background: var(--slate-50); border: 1px solid var(--slate-200);
+    border-radius: var(--radius);
+    font-size: 12px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+  /* ── INTEGRATION NODE ──────────────────────────────────────────── */
+  .int-node {
+    border-radius: var(--radius); padding: 16px;
+    text-align: center;
+    font-size: 12px; font-weight: 600;
+  }
+  .int-node .icon { font-size: 24px; display: block; margin-bottom: 8px; }
+  .int-node .sub  { font-size: 11px; font-weight: 400; opacity: .8; margin-top: 4px; }
+
+  /* ── RESPONSIVE ────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    header { padding: 24px; }
+    main   { padding: 24px; }
+    nav    { padding: 0 24px; }
+    .grid4 { grid-template-columns: 1fr 1fr; }
+    .grid3 { grid-template-columns: 1fr 1fr; }
+    .row   { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ HEADER -->
+<header>
+  <div class="logo-mark">A</div>
+  <div>
+    <h1>Audiris — Solution Architecture</h1>
+    <p>Software Architect · Version 1.0 · 2026-03-30</p>
+    <div class="badges">
+      <span class="badge green">Next.js 14 SSG</span>
+      <span class="badge">Vercel</span>
+      <span class="badge">Serverless</span>
+      <span class="badge">TypeScript</span>
+      <span class="badge">Tailwind CSS</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════ NAV -->
+<nav>
+  <button class="active" onclick="show('c1',this)">C1 · System Context</button>
+  <button onclick="show('c2',this)">C2 · Containers</button>
+  <button onclick="show('c3',this)">C3 · Components</button>
+  <button onclick="show('flow',this)">Data Flow</button>
+  <button onclick="show('deploy',this)">Deployment</button>
+  <button onclick="show('security',this)">Security</button>
+  <button onclick="show('integrations',this)">Integrations</button>
+  <button onclick="show('adr',this)">ADR</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ MAIN -->
+<main>
+
+<!-- ─────────────────────────────────────── C1 SYSTEM CONTEXT -->
+<div id="c1" class="section active">
+  <h2>C1 — System Context</h2>
+  <p class="section-desc">Who uses the Audiris website, what they need, and which external systems it depends on.</p>
+
+  <div class="canvas">
+
+    <!-- Actors row -->
+    <div class="grid3" style="margin-bottom:12px;">
+      <div class="c1-actor">
+        <span class="icon">👤</span>
+        Visitor / Prospect
+        <div class="sub">Browses services, submits enquiries, books calls</div>
+      </div>
+      <div class="c1-actor">
+        <span class="icon">🔍</span>
+        Search Engine
+        <div class="sub">Crawls pages, indexes sitemap, ranks results</div>
+      </div>
+      <div class="c1-actor">
+        <span class="icon">🏢</span>
+        Audiris Sales Team
+        <div class="sub">Receives enquiry emails, manages Calendly calendar</div>
+      </div>
+    </div>
+
+    <!-- Arrows down -->
+    <div class="grid3" style="margin-bottom:12px;">
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">HTTPS · browse &amp; submit</div>
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">HTTP crawl · sitemap.xml</div>
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">email notification</div>
+    </div>
+    <div class="grid3" style="margin-bottom:20px;">
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+    </div>
+
+    <!-- System box -->
+    <div class="c1-system" style="margin-bottom:20px;">
+      <span class="icon">🌐</span>
+      <h3>Audiris Corporate Website</h3>
+      <p>audiris.com · Statically generated · Serverless · Hosted on Vercel<br>
+      Lead generation · Brand credibility · Service showcase</p>
+    </div>
+
+    <!-- Arrows down to external services -->
+    <div class="grid3" style="margin-bottom:12px;">
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+      <div style="height:20px;border-left:2px solid var(--slate-300);margin:0 auto;width:0;position:relative;">
+        <div style="position:absolute;bottom:0;left:-4px;border:5px solid transparent;border-top-color:var(--slate-400);"></div>
+      </div>
+    </div>
+    <div class="grid3" style="margin-bottom:12px;">
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">Resend SDK · send email</div>
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">embed / redirect</div>
+      <div style="text-align:center;font-size:11px;color:var(--slate-400);">JS snippet · after consent</div>
+    </div>
+
+    <!-- External services -->
+    <div class="grid3">
+      <div class="box box-green">
+        <span class="icon">📧</span>
+        <div class="label">Resend API
+          <span class="sub">Email delivery · free tier · 3k/month<br>SPF/DKIM configured</span>
+        </div>
+      </div>
+      <div class="box box-blue">
+        <span class="icon">📅</span>
+        <div class="label">Calendly
+          <span class="sub">Discovery call booking<br>Inline embed or redirect</span>
+        </div>
+      </div>
+      <div class="box box-amber">
+        <span class="icon">📊</span>
+        <div class="label">Plausible / GA4
+          <span class="sub">Privacy-first analytics<br>GDPR-compliant · consent-gated</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend" style="margin-top:28px;">
+      <div class="legend-item"><div class="legend-swatch" style="background:var(--brand);"></div> Core System</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:var(--slate-200);"></div> Human Actors</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:var(--brand-xl);border:1px solid var(--brand);"></div> External Services</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#eff6ff;border:1px solid var(--blue);"></div> 3rd-party SaaS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── C2 CONTAINERS -->
+<div id="c2" class="section">
+  <h2>C2 — Container Diagram</h2>
+  <p class="section-desc">The major deployable units inside the Audiris system and how they relate.</p>
+
+  <div class="canvas">
+
+    <!-- Vercel boundary -->
+    <div class="boundary b-vercel" style="margin-bottom:24px;">
+      <div class="boundary-label">Vercel Platform</div>
+
+      <!-- Top row: Next.js App -->
+      <div style="margin-bottom:16px;">
+        <div class="boundary b-dark" style="padding:20px;margin-bottom:16px;">
+          <div class="boundary-label">Next.js 14 Application · App Router</div>
+
+          <div class="row">
+            <!-- Static Site column -->
+            <div class="col">
+              <div class="box box-green">
+                <span class="icon">📄</span>
+                <div class="label">Static Site Generator (SSG)
+                  <span class="sub">All pages pre-rendered at build time</span>
+                </div>
+              </div>
+              <div class="grid2">
+                <div class="box box-white"><span class="icon">🏠</span><div class="label">Home<span class="sub">/</span></div></div>
+                <div class="box box-white"><span class="icon">⚙️</span><div class="label">Services<span class="sub">/services/*</span></div></div>
+                <div class="box box-white"><span class="icon">🏢</span><div class="label">About<span class="sub">/about</span></div></div>
+                <div class="box box-white"><span class="icon">✉️</span><div class="label">Contact<span class="sub">/contact</span></div></div>
+                <div class="box box-white"><span class="icon">📋</span><div class="label">Case Studies<span class="sub">/case-studies</span></div></div>
+                <div class="box box-white"><span class="icon">🔒</span><div class="label">Privacy<span class="sub">/privacy-policy</span></div></div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div style="width:2px;background:var(--slate-700);border-radius:2px;flex-shrink:0;"></div>
+
+            <!-- Serverless API column -->
+            <div class="col">
+              <div class="box box-amber">
+                <span class="icon">⚡</span>
+                <div class="label">Serverless Function
+                  <span class="sub">POST /api/contact · Edge runtime</span>
+                </div>
+              </div>
+              <div class="box box-white">
+                <span class="icon">✅</span>
+                <div class="label">Validation Layer
+                  <span class="sub">Honeypot · field validation · email regex</span>
+                </div>
+              </div>
+              <div class="box box-white">
+                <span class="icon">🗺️</span>
+                <div class="label">SEO Auto-generation
+                  <span class="sub">sitemap.ts · robots.ts</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div style="width:2px;background:var(--slate-700);border-radius:2px;flex-shrink:0;"></div>
+
+            <!-- Shared Layer column -->
+            <div class="col">
+              <div class="box box-purple">
+                <span class="icon">📚</span>
+                <div class="label">Content Layer (lib/)
+                  <span class="sub">content.ts · services.ts · metadata.ts</span>
+                </div>
+              </div>
+              <div class="box box-white">
+                <span class="icon">🧩</span>
+                <div class="label">UI Component Library
+                  <span class="sub">Tailwind · Framer Motion · Lucide</span>
+                </div>
+              </div>
+              <div class="box box-white">
+                <span class="icon">🖼️</span>
+                <div class="label">Public Assets
+                  <span class="sub">logo.svg · og-image.png</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row: Vercel infrastructure -->
+      <div class="row">
+        <div class="box box-green" style="flex:1;">
+          <span class="icon">🌍</span>
+          <div class="label">Vercel Edge CDN
+            <span class="sub">Global PoPs · HTTPS enforced · Asset caching</span>
+          </div>
+        </div>
+        <div class="box box-green" style="flex:1;">
+          <span class="icon">🔄</span>
+          <div class="label">CI/CD Pipeline
+            <span class="sub">next build · Atomic deploys · Preview envs</span>
+          </div>
+        </div>
+        <div class="box box-green" style="flex:1;">
+          <span class="icon">🔑</span>
+          <div class="label">Environment Variables
+            <span class="sub">RESEND_API_KEY · CONTACT_EMAIL · Encrypted at rest</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- External services row -->
+    <div class="row">
+      <div class="box box-green" style="flex:1;">
+        <span class="icon">📧</span>
+        <div class="label">Resend API
+          <span class="sub">SMTP delivery · 3k emails/month free</span>
+        </div>
+      </div>
+      <div class="box box-blue" style="flex:1;">
+        <span class="icon">📅</span>
+        <div class="label">Calendly
+          <span class="sub">Discovery calls · Free tier</span>
+        </div>
+      </div>
+      <div class="box box-amber" style="flex:1;">
+        <span class="icon">📊</span>
+        <div class="label">Plausible Analytics
+          <span class="sub">Privacy-first · consent-gated</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── C3 COMPONENTS -->
+<div id="c3" class="section">
+  <h2>C3 — Component Diagram</h2>
+  <p class="section-desc">Internal structure of the Next.js application: pages, components, and the shared content layer.</p>
+
+  <div class="canvas">
+
+    <!-- Root Layout -->
+    <div class="box box-dark" style="margin-bottom:20px;">
+      <span class="icon">🗂️</span>
+      <div class="label">app/layout.tsx — Root Shell (wraps every page)
+        <span class="sub">Provides: &lt;Navbar&gt; · &lt;CookieBanner&gt; · &lt;Analytics&gt; · &lt;Footer&gt; · DM Sans font</span>
+      </div>
+    </div>
+
+    <!-- 4 columns: pages -->
+    <div class="grid4" style="margin-bottom:24px;align-items:start;">
+
+      <!-- Home -->
+      <div>
+        <div class="box box-green" style="margin-bottom:8px;">
+          <span class="icon">🏠</span><div class="label">Home · page.tsx</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding-left:12px;">
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🚀</span><div class="label" style="font-size:12px;">Hero<span class="sub">Headline + 2 CTAs + geometric BG</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">⭐</span><div class="label" style="font-size:12px;">SocialProof<span class="sub">Stats or logo strip</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">⚙️</span><div class="label" style="font-size:12px;">ServicesOverview<span class="sub">2×2 grid · id="services"</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🏆</span><div class="label" style="font-size:12px;">WhyAudiris<span class="sub">Dark section · 4 differentiators</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📖</span><div class="label" style="font-size:12px;">OriginStory<span class="sub">2-col · teaser → /about</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📢</span><div class="label" style="font-size:12px;">HomeCTA<span class="sub">Full-width Emerald CTA</span></div></div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <div class="box box-blue" style="margin-bottom:8px;">
+          <span class="icon">⚙️</span><div class="label">Services · ×4 pages</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding-left:12px;">
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🛡️</span><div class="label" style="font-size:12px;">ServiceHero<span class="sub">Breadcrumb · title · CTA</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">⚠️</span><div class="label" style="font-size:12px;">ProblemStatement<span class="sub">Emerald left border accent</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🔢</span><div class="label" style="font-size:12px;">ProcessSteps<span class="sub">3–5 numbered timeline</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🔧</span><div class="label" style="font-size:12px;">ToolsGrid<span class="sub">4-col desktop · 2-col mobile</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🔗</span><div class="label" style="font-size:12px;">RelatedServices<span class="sub">2 complementary cards</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📱</span><div class="label" style="font-size:12px;">MobileStickyBar<span class="sub">50% scroll · mobile only</span></div></div>
+        </div>
+      </div>
+
+      <!-- About + Case Studies + Privacy -->
+      <div>
+        <div class="box box-purple" style="margin-bottom:8px;">
+          <span class="icon">🏢</span><div class="label">About · /about</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding-left:12px;margin-bottom:16px;">
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📜</span><div class="label" style="font-size:12px;">CompanyStory<span class="sub">2-col · pull quote</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">💎</span><div class="label" style="font-size:12px;">Values<span class="sub">3-col icon grid</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">👥</span><div class="label" style="font-size:12px;">Team<span class="sub">Placeholder → real bios</span></div></div>
+        </div>
+        <div class="box box-slate" style="margin-bottom:8px;"><span class="icon">📋</span><div class="label" style="font-size:12px;">Case Studies · Placeholder</div></div>
+        <div class="box box-slate"><span class="icon">🔒</span><div class="label" style="font-size:12px;">Privacy Policy · Static</div></div>
+      </div>
+
+      <!-- Contact + API -->
+      <div>
+        <div class="box box-amber" style="margin-bottom:8px;">
+          <span class="icon">✉️</span><div class="label">Contact · /contact</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;padding-left:12px;margin-bottom:16px;">
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📝</span><div class="label" style="font-size:12px;">ContactForm<span class="sub">RHF · honeypot · validation</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📅</span><div class="label" style="font-size:12px;">BookingSection<span class="sub">Calendly or fallback</span></div></div>
+          <div class="box box-white" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">ℹ️</span><div class="label" style="font-size:12px;">ContactInfo<span class="sub">mailto · LinkedIn · SLA</span></div></div>
+        </div>
+        <div class="box box-red">
+          <span class="icon">⚡</span>
+          <div class="label" style="font-size:12px;">API Route
+            <span class="sub">POST /api/contact → Resend</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared UI atoms -->
+    <div style="border-top:2px dashed var(--slate-200);padding-top:20px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:12px;">Shared UI Atoms (components/ui/)</div>
+      <div class="grid4">
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🔘</span><div class="label" style="font-size:12px;">Button</div></div>
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🃏</span><div class="label" style="font-size:12px;">Card</div></div>
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🏷️</span><div class="label" style="font-size:12px;">Badge</div></div>
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">📰</span><div class="label" style="font-size:12px;">SectionHeading</div></div>
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">✨</span><div class="label" style="font-size:12px;">AnimatedSection<span class="sub">Framer Motion scroll reveal</span></div></div>
+        <div class="box box-slate" style="padding:8px 12px;"><span class="icon" style="font-size:14px;">🔧</span><div class="label" style="font-size:12px;">ToolChip</div></div>
+        <div class="box box-green" style="padding:8px 12px;grid-column:span 2;"><span class="icon" style="font-size:14px;">📚</span><div class="label" style="font-size:12px;">lib/ Content Layer
+          <span class="sub">content.ts · services.ts · metadata.ts — all copy lives here, never in JSX</span>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── DATA FLOW -->
+<div id="flow" class="section">
+  <h2>Data Flow — Contact Form Submission</h2>
+  <p class="section-desc">End-to-end sequence from visitor form fill to Audiris inbox delivery.</p>
+
+  <div class="canvas">
+    <div style="display:flex;gap:24px;align-items:flex-start;">
+
+      <!-- Steps column -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <h4>Visitor fills the contact form</h4>
+            <p>Fields: Full name · Company · Email · Service interest · Message (optional)<br>
+               Hidden honeypot field present but invisible to humans.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <h4>Client-side validation (React Hook Form)</h4>
+            <p>Blur-time and submit-time validation. Inline error messages per field. Submit button shows loading spinner, disabled to prevent double-submit.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <h4>POST <code>/api/contact</code></h4>
+            <p>JSON body: <code>{ name, company, email, service, message, honeypot }</code><br>
+               Request sent to Next.js serverless function on Vercel.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background:var(--red);">4a</div>
+          <div class="flow-content">
+            <h4>Bot detection — Honeypot check</h4>
+            <p>If honeypot field is filled → return <code>200 OK</code> silently. Submission discarded. Bot is not informed.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num" style="background:var(--red);">4b</div>
+          <div class="flow-content">
+            <h4>Server-side validation</h4>
+            <p>Required fields present · email matches RFC 5322 · field length limits.<br>
+               Fail → <code>400 Bad Request</code> with field-level error map.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-content">
+            <h4>Resend SDK — send email</h4>
+            <p><strong>From:</strong> noreply@audiris.com &nbsp;
+               <strong>To:</strong> hello@audiris.com<br>
+               <strong>Subject:</strong> New enquiry from [name] — [company]<br>
+               Body: all form fields in HTML email template.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div class="flow-content">
+            <h4>Resend delivers via SMTP</h4>
+            <p>Resend handles SPF/DKIM signing, retry logic, and delivery receipts. Target: &lt; 5 minutes to Audiris inbox.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">7</div>
+          <div class="flow-content">
+            <h4>Response to browser</h4>
+            <p><strong>Success:</strong> <code>200 OK</code> → form replaced by "Thank you! We'll be in touch within 1 business day."<br>
+               <strong>Resend error:</strong> <code>500</code> → "Something went wrong. Please email us directly at hello@audiris.com"</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Swimlane diagram -->
+      <div style="width:340px;flex-shrink:0;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:12px;">Swimlane</div>
+
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1.5px solid var(--slate-200);border-radius:var(--radius);overflow:hidden;font-size:11px;">
+          <!-- Headers -->
+          <div style="background:var(--slate-100);padding:8px;font-weight:700;color:var(--slate-600);border-bottom:1px solid var(--slate-200);">Browser</div>
+          <div style="background:var(--slate-100);padding:8px;font-weight:700;color:var(--slate-600);border-bottom:1px solid var(--slate-200);">Vercel / Resend</div>
+
+          <!-- Row 1 -->
+          <div style="padding:8px;background:var(--brand-xl);border-bottom:1px solid var(--slate-200);color:var(--brand-dk);">Fill form</div>
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <!-- Row 2 -->
+          <div style="padding:8px;background:var(--brand-xl);border-bottom:1px solid var(--slate-200);color:var(--brand-dk);">RHF validate</div>
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <!-- Row 3 -->
+          <div style="padding:8px;background:#eff6ff;border-bottom:1px solid var(--slate-200);color:#1e3a8a;">POST /api/contact ──▶</div>
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <!-- Row 4a -->
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <div style="padding:8px;background:#fef2f2;border-bottom:1px solid var(--slate-200);color:#7f1d1d;">Honeypot check</div>
+          <!-- Row 4b -->
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <div style="padding:8px;background:#fef2f2;border-bottom:1px solid var(--slate-200);color:#7f1d1d;">Field validation</div>
+          <!-- Row 5 -->
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <div style="padding:8px;background:var(--brand-xl);border-bottom:1px solid var(--slate-200);color:var(--brand-dk);">resend.send()</div>
+          <!-- Row 6 -->
+          <div style="padding:8px;border-bottom:1px solid var(--slate-200);"></div>
+          <div style="padding:8px;background:var(--brand-xl);border-bottom:1px solid var(--slate-200);color:var(--brand-dk);">SMTP → Inbox ✓</div>
+          <!-- Row 7 -->
+          <div style="padding:8px;background:#eff6ff;color:#1e3a8a;">◀── 200 OK</div>
+          <div style="padding:8px;background:var(--brand-xl);color:var(--brand-dk);">Return 200</div>
+        </div>
+
+        <!-- Response codes -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:8px;">Response Codes</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="box box-green" style="padding:8px 12px;"><span style="font-family:monospace;font-size:12px;">200</span>&nbsp;<div class="label" style="font-size:12px;">Email queued successfully<span class="sub">Also returned for honeypot (silent discard)</span></div></div>
+            <div class="box box-amber" style="padding:8px 12px;"><span style="font-family:monospace;font-size:12px;">400</span>&nbsp;<div class="label" style="font-size:12px;">Validation failure<span class="sub">Field-level error map in response body</span></div></div>
+            <div class="box box-red" style="padding:8px 12px;"><span style="font-family:monospace;font-size:12px;">500</span>&nbsp;<div class="label" style="font-size:12px;">Resend API error<span class="sub">Show fallback email to user</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── DEPLOYMENT -->
+<div id="deploy" class="section">
+  <h2>Deployment Architecture</h2>
+  <p class="section-desc">CI/CD pipeline, Vercel edge network topology, and DNS/domain configuration.</p>
+
+  <div class="canvas">
+
+    <!-- Pipeline -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:16px;">Build &amp; Deployment Pipeline</div>
+    <div style="display:flex;align-items:center;gap:0;margin-bottom:32px;overflow-x:auto;">
+
+      <div class="box box-slate" style="flex-shrink:0;min-width:130px;text-align:center;padding:16px 12px;flex-direction:column;gap:4px;">
+        <span style="font-size:24px;">👨‍💻</span>
+        <div style="font-size:12px;font-weight:700;margin-top:4px;">Developer</div>
+        <div style="font-size:11px;color:var(--slate-500);">Local dev</div>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;min-width:80px;">
+        <div style="width:100%;height:2px;background:var(--slate-300);position:relative;">
+          <div style="position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--slate-400);"></div>
+        </div>
+        <div style="font-size:10px;color:var(--slate-400);margin-top:4px;">git push</div>
+      </div>
+
+      <div class="box box-dark" style="flex-shrink:0;min-width:130px;text-align:center;padding:16px 12px;flex-direction:column;gap:4px;">
+        <span style="font-size:24px;">🐙</span>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:4px;">GitHub</div>
+        <div style="font-size:11px;color:var(--slate-400);">main branch</div>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;min-width:80px;">
+        <div style="width:100%;height:2px;background:var(--slate-300);position:relative;">
+          <div style="position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--slate-400);"></div>
+        </div>
+        <div style="font-size:10px;color:var(--slate-400);margin-top:4px;">webhook trigger</div>
+      </div>
+
+      <div class="box box-green" style="flex-shrink:0;min-width:160px;text-align:center;padding:16px 12px;flex-direction:column;gap:4px;">
+        <span style="font-size:24px;">🔄</span>
+        <div style="font-size:12px;font-weight:700;margin-top:4px;">Vercel CI/CD</div>
+        <div style="font-size:11px;">npm install · next build (SSG) · type check · atomic deploy</div>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;min-width:80px;">
+        <div style="width:100%;height:2px;background:var(--slate-300);position:relative;">
+          <div style="position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--slate-400);"></div>
+        </div>
+        <div style="font-size:10px;color:var(--slate-400);margin-top:4px;">atomic swap</div>
+      </div>
+
+      <div class="box box-green" style="flex-shrink:0;min-width:130px;text-align:center;padding:16px 12px;flex-direction:column;gap:4px;">
+        <span style="font-size:24px;">🌍</span>
+        <div style="font-size:12px;font-weight:700;margin-top:4px;">Vercel Edge</div>
+        <div style="font-size:11px;">Live · Zero downtime</div>
+      </div>
+
+    </div>
+
+    <!-- Edge network -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:16px;">Edge Network Topology</div>
+    <div class="row" style="margin-bottom:32px;">
+      <div class="boundary b-vercel" style="flex:1;padding:20px;">
+        <div class="boundary-label">Vercel Edge CDN — Global PoPs</div>
+        <div class="grid3" style="margin-bottom:16px;">
+          <div class="box box-green" style="text-align:center;padding:16px;flex-direction:column;">
+            <span style="font-size:20px;">🇪🇺</span>
+            <div style="font-size:12px;font-weight:700;margin-top:8px;">Europe</div>
+            <div style="font-size:11px;color:var(--brand-dk);">Primary region<br>eu-west-1</div>
+          </div>
+          <div class="box box-green" style="text-align:center;padding:16px;flex-direction:column;">
+            <span style="font-size:20px;">🇺🇸</span>
+            <div style="font-size:12px;font-weight:700;margin-top:8px;">North America</div>
+            <div style="font-size:11px;color:var(--brand-dk);">us-east-1<br>us-west-2</div>
+          </div>
+          <div class="box box-green" style="text-align:center;padding:16px;flex-direction:column;">
+            <span style="font-size:20px;">🌏</span>
+            <div style="font-size:12px;font-weight:700;margin-top:8px;">Asia-Pacific</div>
+            <div style="font-size:11px;color:var(--brand-dk);">ap-southeast-1<br>ap-northeast-1</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="box box-white" style="flex:1;"><span class="icon">📦</span><div class="label" style="font-size:12px;">Static assets cached at edge<span class="sub">HTML · CSS · JS · images · fonts</span></div></div>
+          <div class="box box-white" style="flex:1;"><span class="icon">⚡</span><div class="label" style="font-size:12px;">Serverless fn: eu-west-1<span class="sub">/api/contact · ~50ms cold start</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DNS & Domain -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:16px;">DNS &amp; Domain</div>
+    <div class="row">
+      <div class="box box-slate" style="flex:1;">
+        <span class="icon">🌐</span>
+        <div class="label">Domain: audiris.com
+          <span class="sub">Registered · CNAME/A → Vercel</span>
+        </div>
+      </div>
+      <div class="box box-green" style="flex:1;">
+        <span class="icon">🔒</span>
+        <div class="label">HTTPS / TLS
+          <span class="sub">Let's Encrypt · Auto-renew · HTTP → HTTPS redirect</span>
+        </div>
+      </div>
+      <div class="box box-green" style="flex:1;">
+        <span class="icon">✅</span>
+        <div class="label">SLA: 99.9% uptime
+          <span class="sub">Vercel SLA · SSG = no runtime server dependency</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── SECURITY -->
+<div id="security" class="section">
+  <h2>Security Architecture</h2>
+  <p class="section-desc">Defence-in-depth: 5 layered controls from transport to supply chain.</p>
+
+  <div class="canvas">
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <div class="layer-card">
+        <div class="layer-header" style="background:var(--brand);color:white;">
+          <span style="font-size:18px;">🔒</span>
+          Layer 1 — Transport Security
+        </div>
+        <div class="layer-body">
+          <ul>
+            <li>HTTPS enforced on all routes (Vercel default — no configuration required)</li>
+            <li>HTTP → HTTPS permanent redirect (301)</li>
+            <li>TLS 1.2+ only · Auto-renewing Let's Encrypt certificates</li>
+            <li>HSTS: Strict-Transport-Security enforced via Vercel edge</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-header" style="background:#1e40af;color:white;">
+          <span style="font-size:18px;">🛡️</span>
+          Layer 2 — HTTP Security Headers (next.config.js)
+        </div>
+        <div class="layer-body">
+          <div class="grid2">
+            <div>
+              <ul>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">X-Content-Type-Options: nosniff</code></li>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">X-Frame-Options: SAMEORIGIN</code></li>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">X-XSS-Protection: 1; mode=block</code></li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">Referrer-Policy: strict-origin-when-cross-origin</code></li>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">Permissions-Policy: camera=(), microphone=(), geolocation=()</code></li>
+                <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">Content-Security-Policy</code>: restrictive; no inline scripts</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-header" style="background:#b45309;color:white;">
+          <span style="font-size:18px;">⚡</span>
+          Layer 3 — API Route Protection (/api/contact)
+        </div>
+        <div class="layer-body">
+          <div class="grid2">
+            <ul>
+              <li>Honeypot field: bot submissions silently discarded (200 returned)</li>
+              <li>All required fields validated server-side (belt-and-suspenders)</li>
+              <li>Email format validated against RFC 5322</li>
+            </ul>
+            <ul>
+              <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">RESEND_API_KEY</code> server-only env var — never reaches client bundle</li>
+              <li>No form data written to server logs (NFR-SEC08)</li>
+              <li>Rate limiting: Vercel platform-level DDoS protection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-header" style="background:#6d28d9;color:white;">
+          <span style="font-size:18px;">🇪🇺</span>
+          Layer 4 — Privacy &amp; GDPR Compliance
+        </div>
+        <div class="layer-body">
+          <ul>
+            <li>Cookie consent banner on first visit — analytics fires ONLY after explicit "Accept"</li>
+            <li>Consent stored in <code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">localStorage</code> — banner not shown on return visits</li>
+            <li>No PII (names, emails) passed to analytics events (NFR-AN04)</li>
+            <li>Plausible analytics: cookieless by default, no cross-site tracking</li>
+            <li>Privacy Policy page: data collected, processors (Resend, analytics), opt-out instructions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-header" style="background:var(--slate-700);color:white;">
+          <span style="font-size:18px;">📦</span>
+          Layer 5 — Supply Chain Security
+        </div>
+        <div class="layer-body">
+          <ul>
+            <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">npm audit</code> run pre-launch — no high/critical vulnerabilities permitted</li>
+            <li>Minimal dependency surface: Next.js · Tailwind · Framer Motion · Lucide · RHF · Resend SDK</li>
+            <li>Tree-shaken bundle — unused code never shipped to browser</li>
+            <li><code style="font-family:monospace;background:var(--slate-100);padding:1px 4px;border-radius:3px;">.env.local</code> gitignored — secrets never committed to repository</li>
+            <li>TypeScript strict mode — eliminates whole class of runtime errors at build time</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Threat model summary -->
+    <div style="margin-top:24px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:12px;">Threat Model — Key Risks &amp; Controls</div>
+    <table>
+      <thead><tr><th>Threat</th><th>Control</th><th>Residual Risk</th></tr></thead>
+      <tbody>
+        <tr><td>Contact form spam / bots</td><td>Honeypot field · silent 200 discard</td><td><span class="pill pill-green">Low</span></td></tr>
+        <tr><td>XSS injection via form inputs</td><td>React auto-escapes all output · CSP header</td><td><span class="pill pill-green">Low</span></td></tr>
+        <tr><td>API key exposure</td><td>Server-only env vars · never bundled client-side</td><td><span class="pill pill-green">Low</span></td></tr>
+        <tr><td>Clickjacking</td><td>X-Frame-Options: SAMEORIGIN</td><td><span class="pill pill-green">Low</span></td></tr>
+        <tr><td>GDPR violation</td><td>Consent-gated analytics · Privacy Policy · no PII in analytics</td><td><span class="pill pill-amber">Medium</span> — depends on policy review</td></tr>
+        <tr><td>Email deliverability / spam</td><td>Resend SPF/DKIM · verified sender domain</td><td><span class="pill pill-amber">Medium</span> — must configure DNS records</td></tr>
+        <tr><td>Supply chain compromise</td><td>npm audit · locked lockfile · minimal deps</td><td><span class="pill pill-amber">Medium</span> — ongoing monitoring needed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── INTEGRATIONS -->
+<div id="integrations" class="section">
+  <h2>Integration Map</h2>
+  <p class="section-desc">How the Audiris website connects to external services, with data flows and conditional activation logic.</p>
+
+  <div class="canvas">
+
+    <!-- Central system -->
+    <div style="max-width:320px;margin:0 auto 24px;">
+      <div class="c1-system" style="padding:20px;">
+        <span class="icon" style="font-size:28px;">🌐</span>
+        <h3 style="font-size:16px;">Audiris Website</h3>
+        <p style="font-size:11px;">audiris.com · Vercel · Next.js SSG</p>
+      </div>
+    </div>
+
+    <!-- Integration cards -->
+    <div class="grid2" style="margin-bottom:24px;align-items:start;">
+
+      <!-- Resend -->
+      <div style="border:1.5px solid var(--brand);border-radius:var(--radius);overflow:hidden;">
+        <div style="background:var(--brand);padding:12px 16px;color:white;font-weight:700;display:flex;align-items:center;gap:8px;">
+          <span>📧</span> Resend API — Email Delivery
+        </div>
+        <div style="padding:16px;background:var(--brand-xl);">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px;margin-bottom:12px;">
+            <span style="color:var(--slate-500);">Trigger</span><span>Contact form submit via <code style="font-family:monospace;background:white;padding:1px 4px;border-radius:3px;">POST /api/contact</code></span>
+            <span style="color:var(--slate-500);">SDK call</span><span><code style="font-family:monospace;background:white;padding:1px 4px;border-radius:3px;">resend.emails.send()</code></span>
+            <span style="color:var(--slate-500);">From</span><span>noreply@audiris.com</span>
+            <span style="color:var(--slate-500);">To</span><span>hello@audiris.com (env var)</span>
+            <span style="color:var(--slate-500);">Auth</span><span>RESEND_API_KEY (server-only)</span>
+            <span style="color:var(--slate-500);">Free tier</span><span>3,000 emails/month</span>
+            <span style="color:var(--slate-500);">SLA</span><span>&lt; 5 min delivery to inbox</span>
+          </div>
+          <div class="box box-green" style="padding:8px 12px;font-size:11px;">
+            <span>⚠️</span>
+            <div class="label">Pre-launch: configure SPF/DKIM in DNS to prevent spam classification</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendly -->
+      <div style="border:1.5px solid var(--blue);border-radius:var(--radius);overflow:hidden;">
+        <div style="background:var(--blue);padding:12px 16px;color:white;font-weight:700;display:flex;align-items:center;gap:8px;">
+          <span>📅</span> Calendly — Call Booking
+        </div>
+        <div style="padding:16px;background:#eff6ff;">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px;margin-bottom:12px;">
+            <span style="color:var(--slate-500);">Location</span><span>Contact page → "Prefer to talk?" section</span>
+            <span style="color:var(--slate-500);">Env var</span><span>NEXT_PUBLIC_CALENDLY_URL</span>
+            <span style="color:var(--slate-500);">If set</span><span>Inline Calendly widget or "Book a call" button</span>
+            <span style="color:var(--slate-500);">If not set</span><span>Fallback: "Email us to schedule a call"</span>
+            <span style="color:var(--slate-500);">Cost</span><span>Free tier (individual calendars)</span>
+          </div>
+          <div class="box box-blue" style="padding:8px 12px;font-size:11px;">
+            <span>ℹ️</span>
+            <div class="label">Optional at launch — site gracefully degrades to email fallback</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics -->
+      <div style="border:1.5px solid var(--amber);border-radius:var(--radius);overflow:hidden;">
+        <div style="background:var(--amber);padding:12px 16px;color:white;font-weight:700;display:flex;align-items:center;gap:8px;">
+          <span>📊</span> Plausible Analytics (preferred) / GA4
+        </div>
+        <div style="padding:16px;background:#fffbeb;">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px;margin-bottom:12px;">
+            <span style="color:var(--slate-500);">Activation</span><span>Fires ONLY after visitor clicks "Accept" on cookie banner</span>
+            <span style="color:var(--slate-500);">Storage</span><span>Consent state in localStorage</span>
+            <span style="color:var(--slate-500);">Tracked</span><span>Page views · Form conversions · Outbound clicks</span>
+            <span style="color:var(--slate-500);">Not tracked</span><span>Names · Emails · Any PII (NFR-AN04)</span>
+            <span style="color:var(--slate-500);">Plausible</span><span>Cookieless option · GDPR-friendly · lightweight script</span>
+          </div>
+          <div class="box box-amber" style="padding:8px 12px;font-size:11px;">
+            <span>🇪🇺</span>
+            <div class="label">GDPR: analytics must not fire before explicit consent — enforced in CookieBanner component</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cookie Banner -->
+      <div style="border:1.5px solid var(--purple);border-radius:var(--radius);overflow:hidden;">
+        <div style="background:var(--purple);padding:12px 16px;color:white;font-weight:700;display:flex;align-items:center;gap:8px;">
+          <span>🍪</span> Cookie Consent Banner
+        </div>
+        <div style="padding:16px;background:#f5f3ff;">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12px;margin-bottom:12px;">
+            <span style="color:var(--slate-500);">When shown</span><span>First visit only (localStorage key absent)</span>
+            <span style="color:var(--slate-500);">Actions</span><span>"Accept" → analytics starts · "Decline" → no tracking</span>
+            <span style="color:var(--slate-500);">Persistence</span><span>localStorage["cookie-consent"] = "accepted" | "declined"</span>
+            <span style="color:var(--slate-500);">Link</span><span>Links to /privacy-policy page</span>
+            <span style="color:var(--slate-500);">3rd party lib</span><span>None required — custom component</span>
+          </div>
+          <div class="box box-purple" style="padding:8px 12px;font-size:11px;">
+            <span>🔒</span>
+            <div class="label">No external cookie consent SaaS needed — keeps bundle lean and control in-house</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Conditional activation flow -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:12px;">Conditional Activation Logic</div>
+    <div style="background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--radius);padding:20px;font-size:13px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+        <span style="font-size:16px;">🍪</span>
+        <strong>Visitor arrives →</strong>
+        <span>Check localStorage["cookie-consent"]</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-left:24px;">
+        <div>
+          <div style="color:var(--brand-dk);font-weight:700;margin-bottom:6px;">✅ "accepted" (or clicks Accept)</div>
+          <ul style="font-size:12px;color:var(--slate-600);padding-left:16px;">
+            <li>Analytics script loaded</li>
+            <li>Page view event fired</li>
+            <li>Form conversion tracked on submit</li>
+            <li>Outbound link clicks tracked</li>
+          </ul>
+        </div>
+        <div>
+          <div style="color:var(--red);font-weight:700;margin-bottom:6px;">🚫 "declined" (or clicks Decline)</div>
+          <ul style="font-size:12px;color:var(--slate-600);padding-left:16px;">
+            <li>Analytics script NOT loaded</li>
+            <li>No tracking scripts execute</li>
+            <li>No cookies set</li>
+            <li>Contact form still works normally</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────── ADR -->
+<div id="adr" class="section">
+  <h2>Architecture Decision Records</h2>
+  <p class="section-desc">Key decisions, their rationale, and the trade-offs accepted.</p>
+
+  <div class="canvas">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Decision</th>
+          <th>Rationale</th>
+          <th>Trade-off</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ADR-01</td>
+          <td><strong>Next.js 14 App Router + SSG</strong></td>
+          <td>All pages pre-rendered at build time → no runtime server → SEO-perfect HTML → 99.9% availability via CDN alone</td>
+          <td><span class="pill pill-amber">Content updates require redeploy</span></td>
+        </tr>
+        <tr>
+          <td>ADR-02</td>
+          <td><strong>Vercel hosting</strong></td>
+          <td>Zero-config for Next.js · atomic deploys · global edge CDN · preview environments per PR · free tier covers v1 traffic</td>
+          <td><span class="pill pill-slate">Vendor lock-in (mitigated by standard Next.js)</span></td>
+        </tr>
+        <tr>
+          <td>ADR-03</td>
+          <td><strong>No CMS at launch</strong></td>
+          <td>Reduces complexity, cost, and surface area. Content in <code style="font-family:monospace;font-size:11px;">lib/content.ts</code>. CMS added in v2.0 when content velocity justifies it</td>
+          <td><span class="pill pill-amber">Non-technical edits require developer</span></td>
+        </tr>
+        <tr>
+          <td>ADR-04</td>
+          <td><strong>Resend for email delivery</strong></td>
+          <td>Simplest API · reliable deliverability · SPF/DKIM support · 3k/month free tier exceeds v1 needs</td>
+          <td><span class="pill pill-green">Low risk — easy to swap if needed</span></td>
+        </tr>
+        <tr>
+          <td>ADR-05</td>
+          <td><strong>Tailwind CSS</strong></td>
+          <td>Utility-first enforces design token consistency · eliminates unused CSS via PurgeCSS · fast iteration speed</td>
+          <td><span class="pill pill-slate">Verbose HTML class attributes</span></td>
+        </tr>
+        <tr>
+          <td>ADR-06</td>
+          <td><strong>Framer Motion for animations</strong></td>
+          <td>Declarative <code style="font-family:monospace;font-size:11px;">whileInView</code> scroll reveals · built-in <code style="font-family:monospace;font-size:11px;">prefers-reduced-motion</code> support · tree-shakeable</td>
+          <td><span class="pill pill-slate">~30KB bundle cost</span></td>
+        </tr>
+        <tr>
+          <td>ADR-07</td>
+          <td><strong>React Hook Form</strong></td>
+          <td>Uncontrolled inputs = better performance · no schema library dependency at 9KB · native validation integration</td>
+          <td><span class="pill pill-green">Minimal trade-off</span></td>
+        </tr>
+        <tr>
+          <td>ADR-08</td>
+          <td><strong>Plausible (preferred) over GA4</strong></td>
+          <td>Privacy-first by default · GDPR-compliant without complex cookie setup · no cross-site tracking · simpler consent flow</td>
+          <td><span class="pill pill-slate">Less granular data than GA4</span></td>
+        </tr>
+        <tr>
+          <td>ADR-09</td>
+          <td><strong>Honeypot over CAPTCHA</strong></td>
+          <td>Zero friction for legitimate users · invisible implementation · sufficient for low-volume contact form · no 3rd-party JS</td>
+          <td><span class="pill pill-amber">Less effective against sophisticated bots</span></td>
+        </tr>
+        <tr>
+          <td>ADR-10</td>
+          <td><strong>Single serverless function</strong></td>
+          <td>Contact form is the only stateful operation. Everything else is static. Simplest possible backend surface area. Smallest attack surface.</td>
+          <td><span class="pill pill-green">No meaningful trade-off at v1 scale</span></td>
+        </tr>
+        <tr>
+          <td>ADR-11</td>
+          <td><strong>Content in lib/content.ts (no JSX hardcoding)</strong></td>
+          <td>Separates concerns — content editors don't need JSX knowledge. Enables future CMS swap with minimal refactor.</td>
+          <td><span class="pill pill-slate">Indirection adds one lookup step</span></td>
+        </tr>
+        <tr>
+          <td>ADR-12</td>
+          <td><strong>Custom Cookie Consent (no 3rd-party lib)</strong></td>
+          <td>Reduces bundle size · full control over UX · no SaaS cost · simple localStorage implementation sufficient for this use case</td>
+          <td><span class="pill pill-amber">Manual maintenance of consent logic</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Post-launch roadmap -->
+    <div style="margin-top:32px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500);margin-bottom:12px;">Post-Launch Architectural Evolution</div>
+    <div class="grid3">
+      <div class="box box-green" style="flex-direction:column;align-items:flex-start;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--brand-dk);margin-bottom:8px;">v1.1 — Content</div>
+        <ul style="font-size:12px;color:var(--slate-600);padding-left:16px;">
+          <li>Real team bios &amp; photos</li>
+          <li>1–2 testimonials</li>
+          <li>First case study page</li>
+        </ul>
+      </div>
+      <div class="box box-blue" style="flex-direction:column;align-items:flex-start;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#1e3a8a;margin-bottom:8px;">v1.2–1.3 — Growth</div>
+        <ul style="font-size:12px;color:var(--slate-600);padding-left:16px;">
+          <li>Blog / resources section</li>
+          <li>Client logo strip</li>
+          <li>Additional case studies</li>
+        </ul>
+      </div>
+      <div class="box box-purple" style="flex-direction:column;align-items:flex-start;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#4c1d95;margin-bottom:8px;">v2.0 — Platform</div>
+        <ul style="font-size:12px;color:var(--slate-600);padding-left:16px;">
+          <li>CMS integration (Sanity/Contentful)</li>
+          <li>Partnership landing page</li>
+          <li>Multi-language support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

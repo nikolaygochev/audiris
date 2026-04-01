@@ -89,7 +89,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Selenium', 'Postman', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence'],
+      items: ['Selenium', 'Postman', 'Rest-Assured', 'Java', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence', 'AI Tools'],
     },
     cta: {
       headline: 'Ready to get started with QA & Testing?',
@@ -136,7 +136,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'k6', 'GitHub Actions', 'Jenkins', 'Docker'],
+      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'Rest-Assured', 'Java', 'Gatling', 'k6', 'Grafana', 'GitHub Actions', 'Jenkins', 'Docker', 'AI Tools'],
     },
     cta: {
       headline: 'Ready to get started with Automation Testing?',
@@ -183,7 +183,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['React', 'Next.js', 'Node.js', 'Python', 'PostgreSQL', 'AWS', 'Docker', 'GitHub Actions'],
+      items: ['React', 'Next.js', 'Node.js', 'Java', 'Spring', 'Python', 'PostgreSQL', 'AWS', 'Docker', 'GitHub Actions', 'AI Tools'],
     },
     cta: {
       headline: 'Ready to get started with Software Development?',

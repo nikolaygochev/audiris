@@ -1,13 +1,15 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { type HTMLAttributes } from 'react'
+import { type ReactNode } from 'react'
 
-interface AnimatedSectionProps extends HTMLAttributes<HTMLDivElement> {
+interface AnimatedSectionProps {
   delay?: number
+  children: ReactNode
+  className?: string
 }
 
-export function AnimatedSection({ delay = 0, children, className = '', ...props }: AnimatedSectionProps) {
+export function AnimatedSection({ delay = 0, children, className = '' }: AnimatedSectionProps) {
   const shouldReduce = useReducedMotion()
 
   return (
@@ -17,7 +19,6 @@ export function AnimatedSection({ delay = 0, children, className = '', ...props 
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.4, ease: 'easeOut', delay }}
       className={className}
-      {...props}
     >
       {children}
     </motion.div>

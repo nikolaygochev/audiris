@@ -89,7 +89,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Selenium', 'Postman', 'Rest-Assured', 'Java', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence', 'AI Tools'],
+      items: ['Selenium', 'Postman', 'Rest-Assured', 'Java', 'Python', 'Git', 'CI/CD', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence', 'AI Tools', '& more'],
     },
     cta: {
       headline: 'Ready to get started with QA & Testing?',
@@ -136,7 +136,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'Rest-Assured', 'Java', 'Gatling', 'k6', 'Grafana', 'GitHub Actions', 'Jenkins', 'Docker', 'AI Tools'],
+      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'Rest-Assured', 'Java', 'Python', 'Gatling', 'k6', 'Grafana', 'Git', 'CI/CD', 'AWS', 'GitHub Actions', 'Jenkins', 'Docker', 'AI Tools', '& more'],
     },
     cta: {
       headline: 'Ready to get started with Automation Testing?',
@@ -183,7 +183,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['React', 'Next.js', 'Node.js', 'Java', 'Spring', 'Python', 'PostgreSQL', 'AWS', 'Docker', 'GitHub Actions', 'AI Tools'],
+      items: ['React', 'Next.js', 'Node.js', 'Java', 'Spring', 'Python', 'PostgreSQL', 'AWS', 'Git', 'CI/CD', 'Docker', 'GitHub Actions', 'AI Tools', '& more'],
     },
     cta: {
       headline: 'Ready to get started with Software Development?',

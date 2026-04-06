@@ -5,21 +5,21 @@
 
 export const site = {
   name: 'Audiris',
-  tagline: 'Born in QA. Built for everything that comes after.',
+  tagline: 'Born in QA. Built for Everything that comes after.',
   description:
-    'Audiris is an IT and software consultancy delivering QA, automation testing, software development, and outsourcing services to teams that care about quality.',
+    'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services to teams that care about quality.',
   email: 'hello@audiris.com',
   linkedin: 'https://www.linkedin.com/company/audiris',
-  url: 'https://audiris.com',
+  url: 'https://audiris.io',
   responseTime: 'We respond within 1 business day.',
 }
 
 // ── HOME ─────────────────────────────────────────────────────────────────────
 
 export const hero = {
-  headline: 'Born in QA.\nBuilt for everything that comes after.',
+  headline: 'Born in QA.\nBuilt for Everything that comes after.',
   subheadline:
-    'We started as quality engineers. Today we deliver QA, automation, software development, and outsourcing — with the same rigorous mindset that built our reputation.',
+    'We started as Quality Engineers. Today we deliver QA, Automation, Software Development, and Outsourcing — with the same rigorous mindset that built our reputation.',
   primaryCta:  { label: 'Book a free consultation', href: '/contact' },
   secondaryCta: { label: 'See our services',        href: '/#services' },
 }
@@ -28,7 +28,7 @@ export const socialProof = {
   label: 'Trusted by engineering teams at',
   stats: [
     { value: '10+', label: 'Years of QA expertise' },
-    { value: '50+', label: 'Projects delivered' },
+    { value: '30+', label: 'Projects delivered' },
     { value: '4',   label: 'Service lines' },
   ],
 }
@@ -36,7 +36,7 @@ export const socialProof = {
 export const servicesOverview = {
   sectionTitle: 'What we do',
   sectionSubtitle:
-    'From quality assurance to full-service software delivery — everything we offer is built on a foundation of engineering rigour.',
+    'From Quality Assurance to full-service software delivery — everything we offer is built on a foundation of Engineering rigour.',
 }
 
 export const whyAudiris = {
@@ -71,7 +71,7 @@ export const whyAudiris = {
 
 export const originStory = {
   headline: 'Where we started.\nWhere we\'re going.',
-  body: 'Audiris began as a specialist QA consultancy — because we believed quality shouldn\'t be an afterthought. As our clients\' needs grew, so did we. Today we design systems, build products, and scale engineering teams, all with the same quality-first mindset we started with.',
+  body: 'Audiris began as a specialist QA consultancy — because we believed Quality shouldn\'t be an afterthought. As our clients\' needs grew, so did we. Today we design systems, build products, and scale engineering teams, all with the same quality-first mindset we started with.',
   cta: { label: 'Our story', href: '/about' },
 }
 
@@ -86,11 +86,11 @@ export const homeCTA = {
 export const companyStory = {
   whereWeStarted: {
     title: 'Where we started',
-    body: 'Audiris was founded by engineers who had spent years catching bugs that should never have existed. We believed that quality wasn\'t a phase at the end of a project — it was a way of thinking from the very first line of code. So we built a consultancy around that belief.',
+    body: 'Audiris was founded by Engineers who had spent years catching bugs that should never have existed. We believed that Quality wasn\'t a phase at the end of a project — it was a way of thinking from the very first line of code. So we built a consultancy around that belief.',
   },
   whereWeAreNow: {
     title: 'Where we are now',
-    body: 'What began as specialist QA and automation services has evolved into a full-service software consultancy. Our clients kept asking us to do more — and we kept saying yes — because our quality-first approach turns out to be the right foundation for everything: architecture decisions, delivery cadence, team structure, and beyond.',
+    body: 'What began as specialist QA and Automation services has evolved into a full-service software consultancy. Our clients kept asking us to do more — and we kept saying yes — because our quality-first approach turns out to be the right foundation for everything: architecture decisions, delivery cadence, team structure, and beyond.',
   },
   pullQuote:
     'Most software companies treat quality as a final step. We started there.',

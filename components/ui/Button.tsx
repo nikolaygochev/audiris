@@ -5,10 +5,10 @@ type Variant = 'primary' | 'secondary' | 'outline' | 'white'
 type Size    = 'sm' | 'md' | 'lg'
 
 const variantStyles: Record<Variant, string> = {
-  primary:   'bg-brand-500 hover:bg-brand-600 text-white shadow-sm',
-  secondary: 'bg-accent-500 hover:bg-accent-400 text-white shadow-sm',
-  outline:   'border-2 border-brand-500 text-brand-500 hover:bg-brand-50',
-  white:     'bg-white text-brand-600 hover:bg-brand-50 shadow-sm',
+  primary:   'bg-ink hover:bg-blueprint-600 text-paper',
+  secondary: 'bg-blueprint-500 hover:bg-blueprint-600 text-paper',
+  outline:   'border border-ink text-ink hover:bg-ink hover:text-paper',
+  white:     'bg-paper text-ink hover:bg-rule',
 }
 
 const sizeStyles: Record<Size, string> = {
@@ -25,7 +25,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed'
+  'inline-flex items-center justify-center gap-2 rounded font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blueprint-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed'
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', href, loading, children, className = '', ...props }, ref) => {

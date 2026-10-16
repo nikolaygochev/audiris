@@ -50,8 +50,8 @@ export function ContactForm() {
   if (status === 'success') {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <CheckCircle className="w-12 h-12 text-brand-500 mb-4" />
-        <p className="text-lg font-semibold text-slate-900">{contactPage.formSuccess}</p>
+        <CheckCircle className="w-12 h-12 text-verify-500 mb-4" />
+        <p className="text-lg font-semibold text-ink">{contactPage.formSuccess}</p>
       </div>
     )
   }
@@ -66,14 +66,14 @@ export function ContactForm() {
 
       {/* Name */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="name" className="block text-sm font-medium text-ink mb-1">
           Full name <span className="text-red-500">*</span>
         </label>
         <input
           id="name"
           type="text"
           autoComplete="name"
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
+          className="w-full rounded border border-rule px-4 py-3 text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blueprint-500 focus:border-transparent transition"
           placeholder="Jane Smith"
           {...register('name')}
         />
@@ -84,14 +84,14 @@ export function ContactForm() {
 
       {/* Company */}
       <div>
-        <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">
-          Company <span className="text-slate-400 font-normal">(optional)</span>
+        <label htmlFor="company" className="block text-sm font-medium text-ink mb-1">
+          Company <span className="text-muted font-normal">(optional)</span>
         </label>
         <input
           id="company"
           type="text"
           autoComplete="organization"
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
+          className="w-full rounded border border-rule px-4 py-3 text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blueprint-500 focus:border-transparent transition"
           placeholder="Acme Corp"
           {...register('company')}
         />
@@ -99,14 +99,14 @@ export function ContactForm() {
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
           Work email <span className="text-red-500">*</span>
         </label>
         <input
           id="email"
           type="email"
           autoComplete="email"
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
+          className="w-full rounded border border-rule px-4 py-3 text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blueprint-500 focus:border-transparent transition"
           placeholder="jane@acme.com"
           {...register('email')}
         />
@@ -117,12 +117,12 @@ export function ContactForm() {
 
       {/* Service */}
       <div>
-        <label htmlFor="service" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="service" className="block text-sm font-medium text-ink mb-1">
           Service interested in <span className="text-red-500">*</span>
         </label>
         <select
           id="service"
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-white"
+          className="w-full rounded border border-rule px-4 py-3 text-ink focus:outline-none focus:ring-2 focus:ring-blueprint-500 focus:border-transparent transition bg-paper"
           defaultValue=""
           {...register('service')}
         >
@@ -138,13 +138,13 @@ export function ContactForm() {
 
       {/* Message */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
+        <label htmlFor="message" className="block text-sm font-medium text-ink mb-1">
           Tell us about your project <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
           rows={5}
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition resize-none"
+          className="w-full rounded border border-rule px-4 py-3 text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blueprint-500 focus:border-transparent transition resize-none"
           placeholder="What are you working on? What's the challenge?"
           {...register('message')}
         />
@@ -154,7 +154,7 @@ export function ContactForm() {
       </div>
 
       {status === 'error' && (
-        <div className="flex items-start gap-3 rounded-lg bg-red-50 border border-red-200 p-4">
+        <div className="flex items-start gap-3 rounded bg-red-50 border border-red-200 p-4">
           <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
           <p className="text-sm text-red-700">{contactPage.formError}</p>
         </div>
@@ -163,7 +163,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full rounded-lg bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 px-6 transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full rounded bg-ink hover:bg-blueprint-600 text-paper font-semibold py-3 px-6 transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {status === 'loading' ? (
           <>
@@ -178,7 +178,7 @@ export function ContactForm() {
         )}
       </button>
 
-      <p className="text-xs text-slate-400 text-center">
+      <p className="text-xs text-muted text-center">
         We respond within 1 business day. No spam, ever.
       </p>
     </form>

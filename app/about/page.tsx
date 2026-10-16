@@ -17,13 +17,12 @@ export default function AboutPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="py-24 bg-slate-900">
+      <section className="py-24 bg-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-brand-400 font-medium mb-4 tracking-wide uppercase text-sm">Our story</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto">
+          <h1 className="font-display text-4xl sm:text-5xl font-semibold text-paper leading-tight max-w-3xl mx-auto">
             Born in QA. Built for everything that comes after.
           </h1>
-          <p className="mt-6 text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-6 text-xl text-muted max-w-2xl mx-auto leading-relaxed">
             {missionStatement}
           </p>
         </div>
@@ -34,12 +33,12 @@ export default function AboutPage() {
       <Team />
 
       {/* CTA */}
-      <section className="py-20 bg-brand-500">
+      <section className="py-20 bg-ink border-t border-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="font-display text-3xl font-semibold text-paper mb-4">
             Ready to work with us?
           </h2>
-          <p className="text-brand-100 mb-8 text-lg">
+          <p className="text-muted mb-8 text-lg">
             Let's talk about your project — no obligation, just an honest conversation.
           </p>
           <Button href="/contact" variant="white" size="lg">

@@ -14,7 +14,7 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-slate-900 text-slate-400">
+    <footer className="bg-ink text-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
         {/* 4-column grid */}
@@ -29,11 +29,11 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-white text-sm font-semibold uppercase tracking-widest mb-4">Services</h3>
+            <h3 className="text-paper text-sm font-semibold mb-4">Services</h3>
             <ul className="space-y-3">
               {serviceList.map(s => (
                 <li key={s.id}>
-                  <Link href={s.slug} className="text-sm hover:text-white transition-colors">
+                  <Link href={s.slug} className="text-sm hover:text-paper transition-colors">
                     {s.name}
                   </Link>
                 </li>
@@ -43,11 +43,11 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-white text-sm font-semibold uppercase tracking-widest mb-4">Company</h3>
+            <h3 className="text-paper text-sm font-semibold mb-4">Company</h3>
             <ul className="space-y-3">
               {companyLinks.map(link => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-white transition-colors">
+                  <Link href={link.href} className="text-sm hover:text-paper transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -57,12 +57,12 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white text-sm font-semibold uppercase tracking-widest mb-4">Contact</h3>
+            <h3 className="text-paper text-sm font-semibold mb-4">Contact</h3>
             <ul className="space-y-3">
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="flex items-center gap-2 text-sm hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm hover:text-paper transition-colors"
                 >
                   <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                   {site.email}
@@ -73,7 +73,7 @@ export function Footer() {
                   href={site.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm hover:text-paper transition-colors"
                 >
                   <Linkedin className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                   LinkedIn
@@ -84,9 +84,9 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+        <div className="border-t border-muted/30 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
           <p>© {year} {site.name}. All rights reserved.</p>
-          <Link href="/privacy-policy" className="hover:text-white transition-colors">
+          <Link href="/privacy-policy" className="hover:text-paper transition-colors">
             Privacy Policy
           </Link>
         </div>

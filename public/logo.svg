@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228 48" fill="none" role="img" aria-label="Audiris">
   <!-- Mark: capital A with checkmark crossbar -->
-  <g stroke="#059669" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke="#1B7F5C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
     <!-- Left leg -->
     <line x1="2" y1="44" x2="22" y2="4"/>
     <!-- Right leg -->
@@ -8,13 +8,13 @@
     <!-- Crossbar (horizontal) + checkmark tail -->
     <polyline points="11,26 23,26 27,32 36,18"/>
   </g>
-  <!-- Wordmark: capital A -->
+  <!-- Wordmark -->
   <text
     x="54" y="32"
-    font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif"
-    font-size="26"
-    font-weight="600"
-    fill="#0F172A"
-    letter-spacing="-0.5"
+    font-family="'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif"
+    font-size="25"
+    font-weight="700"
+    fill="#14181C"
+    letter-spacing="-0.3"
   >Audiris</text>
 </svg>

@@ -34,7 +34,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        scrolled ? 'bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm' : 'bg-transparent'
+        scrolled ? 'bg-paper/95 backdrop-blur-sm border-b border-rule' : 'bg-transparent'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" aria-label="Main navigation">
@@ -51,10 +51,10 @@ export function Navbar() {
           {/* Services dropdown */}
           <div className="relative">
             <button
-              className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded transition-colors ${
                 pathname.startsWith('/services')
-                  ? 'text-brand-600'
-                  : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50'
+                  ? 'text-blueprint-500'
+                  : 'text-ink hover:text-blueprint-500'
               }`}
               onClick={() => setServicesOpen(o => !o)}
               onBlur={() => setTimeout(() => setServicesOpen(false), 150)}
@@ -66,12 +66,12 @@ export function Navbar() {
             </button>
 
             {servicesOpen && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-slate-200 py-2 z-10">
+              <div className="absolute top-full left-0 mt-1 w-56 bg-paper rounded border border-rule py-2 z-10">
                 {serviceList.map(s => (
                   <Link
                     key={s.id}
                     href={s.slug}
-                    className="block px-4 py-2.5 text-sm text-slate-700 hover:text-brand-600 hover:bg-brand-50 transition-colors"
+                    className="block px-4 py-2.5 text-sm text-ink hover:text-blueprint-500 transition-colors"
                   >
                     {s.name}
                   </Link>
@@ -84,10 +84,10 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors relative ${
+              className={`px-3 py-2 text-sm font-medium rounded transition-colors relative ${
                 isActive(link.href)
-                  ? 'text-brand-600 after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:bg-brand-500 after:rounded-full'
-                  : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50'
+                  ? 'text-blueprint-500 after:absolute after:bottom-0 after:left-3 after:right-3 after:h-px after:bg-blueprint-500'
+                  : 'text-ink hover:text-blueprint-500'
               }`}
             >
               {link.label}
@@ -101,7 +101,7 @@ export function Navbar() {
 
         {/* Hamburger */}
         <button
-          className="md:hidden p-2 rounded-md text-slate-700 hover:bg-slate-100 transition-colors"
+          className="md:hidden p-2 rounded text-ink hover:bg-rule/60 transition-colors"
           onClick={() => setMobileOpen(o => !o)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -112,26 +112,26 @@ export function Navbar() {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-white flex flex-col pt-16">
+        <div className="md:hidden fixed inset-0 z-40 bg-paper flex flex-col pt-16">
           <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-2">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Services</p>
+            <p className="text-sm font-medium text-muted mb-2">Services</p>
             {serviceList.map(s => (
               <Link
                 key={s.id}
                 href={s.slug}
-                className="block px-3 py-3 text-slate-800 font-medium rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
+                className="block px-3 py-3 text-ink font-medium rounded hover:text-blueprint-500 transition-colors"
               >
                 {s.name}
               </Link>
             ))}
 
-            <hr className="my-4 border-slate-200" />
+            <hr className="my-4 border-rule" />
 
             {navLinks.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block px-3 py-3 text-slate-800 font-medium rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
+                className="block px-3 py-3 text-ink font-medium rounded hover:text-blueprint-500 transition-colors"
               >
                 {link.label}
               </Link>

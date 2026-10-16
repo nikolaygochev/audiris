@@ -16,20 +16,20 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 bg-slate-900">
+      <section className="py-20 bg-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">{contactPage.title}</h1>
-          <p className="text-xl text-slate-300 max-w-xl mx-auto">{contactPage.subtitle}</p>
+          <h1 className="font-display text-4xl sm:text-5xl font-semibold text-paper mb-4">{contactPage.title}</h1>
+          <p className="text-xl text-muted max-w-xl mx-auto">{contactPage.subtitle}</p>
         </div>
       </section>
 
       {/* Form + sidebar */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-paper">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             {/* Form — 2/3 width */}
             <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Send us a message</h2>
+              <h2 className="font-display text-2xl font-semibold text-ink mb-8">Send us a message</h2>
               <ContactForm />
             </div>
 
@@ -38,7 +38,7 @@ export default function ContactPage() {
               <BookingSection />
 
               <div className="pt-2">
-                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-6">
+                <h3 className="text-sm font-semibold text-muted mb-6">
                   Other ways to reach us
                 </h3>
                 <ContactInfo />

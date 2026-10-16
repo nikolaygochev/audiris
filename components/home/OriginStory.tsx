@@ -1,43 +1,44 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { originStory } from '@/lib/content'
+import { serviceList }  from '@/lib/services'
 
 export function OriginStory() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-paper">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
           {/* Text */}
-          <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 whitespace-pre-line">
+          <div>
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink whitespace-pre-line">
               {originStory.headline}
             </h2>
-            <p className="mt-6 text-lg text-slate-600 leading-relaxed">{originStory.body}</p>
+            <p className="mt-6 text-lg text-muted leading-relaxed">{originStory.body}</p>
             <Link
               href={originStory.cta.href}
-              className="inline-flex items-center gap-2 mt-8 text-base font-semibold text-brand-600 hover:text-brand-700 transition-colors group"
+              className="inline-flex items-center gap-2 mt-8 text-base font-semibold text-blueprint-500 hover:text-blueprint-600 transition-colors group"
             >
               {originStory.cta.label}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
-          </AnimatedSection>
+          </div>
 
-          {/* Abstract visual */}
-          <AnimatedSection delay={0.15}>
-            <div className="relative h-72 lg:h-80 rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center overflow-hidden">
-              <svg viewBox="0 0 400 300" fill="none" className="absolute inset-0 w-full h-full opacity-30" aria-hidden="true">
-                <circle cx="200" cy="150" r="120" stroke="#059669" strokeWidth="2" strokeDasharray="8 6" />
-                <circle cx="200" cy="150" r="80"  stroke="#059669" strokeWidth="2" strokeDasharray="6 8" />
-                <circle cx="200" cy="150" r="40"  fill="#059669" fillOpacity="0.2" />
-              </svg>
-              <div className="relative z-10 text-center px-8">
-                <div className="text-5xl font-black text-brand-600 leading-none">10+</div>
-                <div className="mt-2 text-sm font-semibold text-brand-700 uppercase tracking-widest">Years of QA expertise</div>
+          {/* Real expansion timeline: the order services were added */}
+          <div className="border-l border-rule pl-8">
+            {serviceList.map((s, i) => (
+              <div key={s.id} className="relative pb-8 last:pb-0">
+                <span
+                  className="absolute -left-[33px] top-1 h-2.5 w-2.5 rounded-full bg-verify-500"
+                  aria-hidden="true"
+                />
+                <p className="font-mono text-xs text-muted">
+                  {i === 0 ? 'Where we started' : i === serviceList.length - 1 ? 'Where we are now' : `Stage ${i + 1}`}
+                </p>
+                <p className="mt-1 text-ink font-medium">{s.name}</p>
               </div>
-            </div>
-          </AnimatedSection>
+            ))}
+          </div>
         </div>
       </div>
     </section>

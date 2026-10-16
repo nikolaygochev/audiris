@@ -26,13 +26,13 @@ export function MobileStickyBar() {
 
   return (
     // Only shown on mobile — hidden on md+ via Tailwind
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-white border-t border-slate-200 shadow-xl flex items-center gap-3">
-      <Button href="/contact" size="md" className="flex-1 justify-center">
-        Get in touch
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-field/95 backdrop-blur-md border-t border-graphite/10 flex items-center gap-3">
+      <Button href="/contact" size="md" className="flex-1">
+        Talk to us
       </Button>
       <button
         onClick={() => { setDismissed(true); setVisible(false) }}
-        className="p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+        className="p-2 rounded-full text-dim hover:text-graphite hover:bg-graphite/5 transition-colors"
         aria-label="Dismiss"
       >
         <X className="h-5 w-5" aria-hidden="true" />

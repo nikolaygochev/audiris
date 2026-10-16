@@ -8,22 +8,22 @@ interface SectionHeadingProps {
 export function SectionHeading({
   title,
   subtitle,
-  align = 'center',
+  align = 'left',
   light = false,
 }: SectionHeadingProps) {
   return (
     <div className={`mb-12 ${align === 'center' ? 'text-center' : ''}`}>
       <h2
-        className={`text-3xl md:text-4xl font-bold tracking-tight ${
-          light ? 'text-white' : 'text-slate-900'
+        className={`font-display text-3xl md:text-[2.75rem] md:leading-[1.1] font-semibold tracking-tight ${
+          light ? 'text-field' : 'text-graphite'
         }`}
       >
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`mt-4 text-lg max-w-2xl ${align === 'center' ? 'mx-auto' : ''} ${
-            light ? 'text-slate-300' : 'text-slate-600'
+          className={`mt-4 text-lg leading-relaxed max-w-2xl ${align === 'center' ? 'mx-auto' : ''} ${
+            light ? 'text-haze' : 'text-dim'
           }`}
         >
           {subtitle}

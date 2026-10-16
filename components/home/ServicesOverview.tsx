@@ -1,49 +1,41 @@
 import Link from 'next/link'
-import { ArrowRight, ShieldCheck, Zap, Code2, Users } from 'lucide-react'
-import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { SectionHeading }  from '@/components/ui/SectionHeading'
-import { Card }            from '@/components/ui/Card'
+import { ArrowUpRight } from 'lucide-react'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { RingMarker }     from '@/components/ui/Iris'
 import { servicesOverview } from '@/lib/content'
 import { serviceList } from '@/lib/services'
 
-const iconMap: Record<string, React.ReactNode> = {
-  ShieldCheck: <ShieldCheck className="h-6 w-6 text-brand-500" aria-hidden="true" />,
-  Zap:         <Zap         className="h-6 w-6 text-brand-500" aria-hidden="true" />,
-  Code2:       <Code2       className="h-6 w-6 text-brand-500" aria-hidden="true" />,
-  Users:       <Users       className="h-6 w-6 text-brand-500" aria-hidden="true" />,
-}
-
 export function ServicesOverview() {
   return (
-    <section id="services" className="py-24 bg-slate-50">
+    <section id="services" className="py-24 bg-field scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <SectionHeading
-            title={servicesOverview.sectionTitle}
-            subtitle={servicesOverview.sectionSubtitle}
-          />
-        </AnimatedSection>
+        <SectionHeading
+          title={servicesOverview.sectionTitle}
+          subtitle={servicesOverview.sectionSubtitle}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ul className="border-b border-graphite/10">
           {serviceList.map((service, i) => (
-            <AnimatedSection key={service.id} delay={i * 0.1}>
-              <Card hover className="h-full flex flex-col">
-                <div className="p-2 bg-brand-50 rounded-lg w-fit mb-4">
-                  {iconMap[service.icon]}
-                </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{service.name}</h3>
-                <p className="text-slate-600 text-sm flex-1">{service.shortDescription}</p>
-                <Link
-                  href={service.slug}
-                  className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors group"
-                >
-                  Learn more
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              </Card>
-            </AnimatedSection>
+            <li key={service.id} className="border-t border-graphite/10">
+              <Link
+                href={service.slug}
+                className="group grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_minmax(0,18rem)_1fr_auto] items-center gap-x-6 gap-y-2 py-7 px-2 -mx-2 transition-colors hover:bg-white"
+              >
+                <RingMarker index={i} className="col-start-1 row-start-1 h-10 w-10" />
+                <h3 className="col-start-2 row-start-1 font-display text-2xl font-semibold text-graphite tracking-tight group-hover:text-iris-500 transition-colors">
+                  {service.name}
+                </h3>
+                <p className="col-start-2 row-start-2 md:col-start-3 md:row-start-1 text-dim leading-relaxed max-w-xl">
+                  {service.shortDescription}
+                </p>
+                <ArrowUpRight
+                  className="col-start-3 row-start-1 md:col-start-4 h-6 w-6 text-haze group-hover:text-iris-500 transition-colors"
+                  aria-hidden="true"
+                />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )

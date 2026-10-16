@@ -1,14 +1,20 @@
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Sans } from 'next/font/google'
 import './globals.css'
 import { Navbar }       from '@/components/layout/Navbar'
 import { Footer }       from '@/components/layout/Footer'
 import { CookieBanner } from '@/components/layout/CookieBanner'
 import { site }         from '@/lib/content'
 
-const dmSans = DM_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-bricolage',
+  display: 'swap',
+})
+
+const instrument = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-instrument',
   display: 'swap',
 })
 
@@ -27,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={dmSans.variable}>
+    <html lang="en" className={`${bricolage.variable} ${instrument.variable}`}>
       <head>
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <script
@@ -37,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         )}
       </head>
-      <body className="font-sans text-slate-900 bg-white">
+      <body className="font-sans text-graphite bg-field">
         <Navbar />
         <main className="pt-16">{children}</main>
         <Footer />

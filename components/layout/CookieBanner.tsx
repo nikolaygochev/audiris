@@ -34,21 +34,21 @@ export function CookieBanner() {
       aria-label="Cookie consent"
       className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6"
     >
-      <div className="max-w-3xl mx-auto bg-slate-900 text-white rounded-xl shadow-2xl border border-slate-700 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <p className="flex-1 text-sm text-slate-300">
+      <div className="max-w-3xl mx-auto bg-pupil text-field rounded-sm border border-field/10 shadow-[0_16px_40px_-16px_rgba(15,20,51,0.5)] p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <p className="flex-1 text-sm text-haze">
           We use cookies to understand how visitors use our site.{' '}
-          <Link href="/privacy-policy" className="text-brand-400 underline underline-offset-2 hover:text-brand-300">
-            Privacy Policy
+          <Link href="/privacy-policy" className="text-focus-300 underline underline-offset-2 hover:text-field">
+            Privacy policy
           </Link>
         </p>
         <div className="flex gap-3 flex-shrink-0">
           <button
             onClick={decline}
-            className="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors"
+            className="px-4 py-2 text-sm font-medium text-haze hover:text-field transition-colors"
           >
             Decline
           </button>
-          <Button size="sm" onClick={accept}>Accept</Button>
+          <Button size="sm" variant="white" onClick={accept}>Accept</Button>
         </div>
       </div>
     </div>

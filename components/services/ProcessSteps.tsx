@@ -1,54 +1,33 @@
-import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { SectionHeading }  from '@/components/ui/SectionHeading'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import type { ServiceData } from '@/lib/services'
 
 export function ProcessSteps({ service }: { service: ServiceData }) {
+  const steps = service.process.steps
+
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white border-y border-graphite/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <SectionHeading title={service.process.title} />
-        </AnimatedSection>
+        <SectionHeading title={service.process.title} />
 
-        {/* Desktop: horizontal timeline */}
-        <div className="hidden md:flex items-start gap-0">
-          {service.process.steps.map((step, i) => (
-            <div key={step.number} className="flex-1 flex flex-col items-center text-center relative">
-              {/* Connector line */}
-              {i < service.process.steps.length - 1 && (
-                <div className="absolute top-5 left-1/2 right-0 h-0.5 bg-brand-100" aria-hidden="true" />
+        <ol className="grid grid-cols-1 md:grid-cols-5 gap-0">
+          {steps.map((step, i) => (
+            <li key={step.number} className="relative flex md:flex-col gap-5 md:gap-0 pb-8 md:pb-0 md:pr-6">
+              {i < steps.length - 1 && (
+                <>
+                  <span className="hidden md:block absolute top-5 left-10 right-0 h-px bg-graphite/15" aria-hidden="true" />
+                  <span className="md:hidden absolute top-10 bottom-0 left-5 w-px bg-graphite/15" aria-hidden="true" />
+                </>
               )}
-              {/* Number circle */}
-              <div className="relative z-10 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+              <span className="relative z-10 w-10 h-10 rounded-full border-2 border-iris-500 bg-white text-iris-500 flex items-center justify-center font-display font-semibold flex-shrink-0">
                 {step.number}
+              </span>
+              <div className="md:mt-5">
+                <h3 className="font-display text-lg font-semibold text-graphite">{step.title}</h3>
+                <p className="mt-2 text-sm text-dim leading-relaxed">{step.description}</p>
               </div>
-              <div className="mt-4 px-3">
-                <h3 className="font-semibold text-slate-900 text-sm">{step.title}</h3>
-                <p className="mt-2 text-xs text-slate-500 leading-relaxed">{step.description}</p>
-              </div>
-            </div>
+            </li>
           ))}
-        </div>
-
-        {/* Mobile: vertical stack */}
-        <div className="md:hidden flex flex-col gap-6">
-          {service.process.steps.map((step, i) => (
-            <AnimatedSection key={step.number} delay={i * 0.08} className="flex gap-5">
-              <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
-                  {step.number}
-                </div>
-                {i < service.process.steps.length - 1 && (
-                  <div className="flex-1 w-0.5 bg-brand-100 mt-2" />
-                )}
-              </div>
-              <div className="pb-6">
-                <h3 className="font-semibold text-slate-900">{step.title}</h3>
-                <p className="mt-2 text-sm text-slate-600 leading-relaxed">{step.description}</p>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

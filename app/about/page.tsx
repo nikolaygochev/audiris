@@ -3,7 +3,7 @@ import { buildMetadata }   from '@/lib/metadata'
 import { CompanyStory }    from '@/components/about/CompanyStory'
 import { Values }          from '@/components/about/Values'
 import { Team }            from '@/components/about/Team'
-import { missionStatement } from '@/lib/content'
+import { missionStatement, site } from '@/lib/content'
 import { Button }          from '@/components/ui/Button'
 
 export const metadata: Metadata = buildMetadata({
@@ -16,14 +16,12 @@ export const metadata: Metadata = buildMetadata({
 export default function AboutPage() {
   return (
     <>
-      {/* Page hero */}
-      <section className="py-24 bg-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-brand-400 font-medium mb-4 tracking-wide uppercase text-sm">Our story</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto">
-            Born in QA. Built for everything that comes after.
+      <section className="pt-20 pb-24 bg-pupil">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="font-display text-[2.5rem] sm:text-6xl font-semibold text-field tracking-[-0.03em] leading-[1.05] max-w-4xl">
+            {site.tagline}
           </h1>
-          <p className="mt-6 text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-8 text-xl text-haze max-w-2xl leading-relaxed">
             {missionStatement}
           </p>
         </div>
@@ -33,16 +31,17 @@ export default function AboutPage() {
       <Values />
       <Team />
 
-      {/* CTA */}
-      <section className="py-20 bg-brand-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to work with us?
-          </h2>
-          <p className="text-brand-100 mb-8 text-lg">
-            Let's talk about your project — no obligation, just an honest conversation.
-          </p>
-          <Button href="/contact" variant="white" size="lg">
+      <section className="py-20 bg-iris-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-3xl md:text-[2.75rem] md:leading-[1.1] font-semibold tracking-tight text-field">
+              Ready to work with us?
+            </h2>
+            <p className="mt-4 text-lg text-iris-100">
+              Let&apos;s talk about your project — no obligation, just an honest conversation.
+            </p>
+          </div>
+          <Button href="/contact" variant="white" size="lg" className="self-start lg:self-auto">
             Get in touch
           </Button>
         </div>

@@ -10,18 +10,18 @@ export const metadata: Metadata = buildMetadata({
 
 export default function PrivacyPolicyPage() {
   return (
-    <section className="py-20 bg-white">
+    <section className="pt-14 pb-24 bg-field">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-slate-900 mb-3">Privacy Policy</h1>
-        <p className="text-sm text-slate-400 mb-10">Last updated: {privacyPolicy.lastUpdated}</p>
+        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight text-graphite">Privacy policy</h1>
+        <p className="mt-3 text-sm text-dim">Last updated: {privacyPolicy.lastUpdated}</p>
 
-        <p className="text-lg text-slate-600 leading-relaxed mb-12">{privacyPolicy.intro}</p>
+        <p className="mt-10 text-lg text-graphite leading-relaxed">{privacyPolicy.intro}</p>
 
-        <div className="space-y-10">
-          {privacyPolicy.sections.map((section) => (
-            <div key={section.title}>
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">{section.title}</h2>
-              <p className="text-slate-600 leading-relaxed">{section.body}</p>
+        <div className="mt-12">
+          {privacyPolicy.sections.map(section => (
+            <div key={section.title} className="border-t border-graphite/10 py-8">
+              <h2 className="font-display text-xl font-semibold text-graphite mb-3">{section.title}</h2>
+              <p className="text-dim leading-relaxed">{section.body}</p>
             </div>
           ))}
         </div>

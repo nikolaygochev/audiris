@@ -5,16 +5,16 @@ type Variant = 'primary' | 'secondary' | 'outline' | 'white'
 type Size    = 'sm' | 'md' | 'lg'
 
 const variantStyles: Record<Variant, string> = {
-  primary:   'bg-brand-500 hover:bg-brand-600 text-white shadow-sm',
-  secondary: 'bg-accent-500 hover:bg-accent-400 text-white shadow-sm',
-  outline:   'border-2 border-brand-500 text-brand-500 hover:bg-brand-50',
-  white:     'bg-white text-brand-600 hover:bg-brand-50 shadow-sm',
+  primary:   'bg-iris-500 hover:bg-iris-600 text-field',
+  secondary: 'bg-pupil hover:bg-iris-600 text-field',
+  outline:   'border border-graphite/25 text-graphite hover:border-iris-500 hover:text-iris-500',
+  white:     'bg-field text-pupil hover:bg-iris-50',
 }
 
 const sizeStyles: Record<Size, string> = {
   sm:  'px-4 py-2 text-sm',
   md:  'px-6 py-3 text-base',
-  lg:  'px-8 py-4 text-lg',
+  lg:  'px-7 py-3.5 text-base',
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -25,7 +25,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed'
+  'inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed'
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', href, loading, children, className = '', ...props }, ref) => {

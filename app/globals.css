@@ -10,14 +10,19 @@
   }
 
   :focus-visible {
-    outline: 2px solid theme('colors.brand.500');
-    outline-offset: 2px;
+    outline: 2px solid theme('colors.focus.500');
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
   }
 
   /* Reduced motion — disable all transitions */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }

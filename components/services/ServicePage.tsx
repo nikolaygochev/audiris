@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react'
 import { ServiceHero }      from './ServiceHero'
 import { ProblemStatement } from './ProblemStatement'
 import { ProcessSteps }     from './ProcessSteps'
@@ -5,8 +6,6 @@ import { ToolsGrid }        from './ToolsGrid'
 import { RelatedServices }  from './RelatedServices'
 import { ServiceCTA }       from './ServiceCTA'
 import { MobileStickyBar }  from './MobileStickyBar'
-import { AnimatedSection }  from '@/components/ui/AnimatedSection'
-import { SectionHeading }   from '@/components/ui/SectionHeading'
 import type { ServiceData } from '@/lib/services'
 
 export function ServicePage({ service }: { service: ServiceData }) {
@@ -15,29 +14,28 @@ export function ServicePage({ service }: { service: ServiceData }) {
       <ServiceHero service={service} />
       <ProblemStatement service={service} />
 
-      {/* Solution narrative */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-field">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="max-w-3xl">
-              <SectionHeading title={service.solution.title} align="left" />
-              <p className="text-lg text-slate-600 leading-relaxed">{service.solution.body}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-graphite">
+              {service.solution.title}
+            </h2>
+            <div className="max-w-2xl">
+              <p className="text-lg text-dim leading-relaxed">{service.solution.body}</p>
               {service.solution.outcomes.length > 0 && (
-                <ul className="mt-6 space-y-3">
+                <ul className="mt-8 space-y-4">
                   {service.solution.outcomes.map(o => (
-                    <li key={o} className="flex items-start gap-3">
-                      <span className="mt-1 h-5 w-5 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0">
-                        <svg className="h-3 w-3 text-brand-600" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-                          <path d="M3.5 6.5L5.5 8.5L8.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        </svg>
+                    <li key={o} className="flex items-start gap-4">
+                      <span className="mt-0.5 h-6 w-6 rounded-full bg-iris-500 flex items-center justify-center flex-shrink-0">
+                        <Check className="h-3.5 w-3.5 text-field" strokeWidth={3} aria-hidden="true" />
                       </span>
-                      <span className="text-slate-700">{o}</span>
+                      <span className="text-graphite text-lg leading-snug">{o}</span>
                     </li>
                   ))}
                 </ul>
               )}
             </div>
-          </AnimatedSection>
+          </div>
         </div>
       </section>
 

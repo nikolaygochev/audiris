@@ -5,7 +5,7 @@
 
 export const site = {
   name: 'Audiris',
-  tagline: 'Born in QA. Built for Everything that comes after.',
+  tagline: 'Born in QA. Built for everything that comes after.',
   description:
     'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services to teams that care about quality.',
   email: 'hello@audiris.com',
@@ -17,7 +17,7 @@ export const site = {
 // ── HOME ─────────────────────────────────────────────────────────────────────
 
 export const hero = {
-  headline: 'Born in QA.\nBuilt for Everything that comes after.',
+  headline: 'Born in QA.\nBuilt for everything that comes after.',
   subheadline:
     'We started as Quality Engineers. Today we deliver QA, Automation, Software Development, and Outsourcing — with the same rigorous mindset that built our reputation.',
   primaryCta:  { label: 'Book a free consultation', href: '/contact' },
@@ -25,7 +25,6 @@ export const hero = {
 }
 
 export const socialProof = {
-  label: 'Trusted by engineering teams at',
   stats: [
     { value: '10+', label: 'Years of QA expertise' },
     { value: '30+', label: 'Projects delivered' },
@@ -43,25 +42,21 @@ export const whyAudiris = {
   sectionTitle: 'Why Audiris?',
   items: [
     {
-      icon: 'ShieldCheck',
       title: 'Quality-first DNA',
       description:
         'We started in QA. Every line of code we write or test carries that standard.',
     },
     {
-      icon: 'Zap',
       title: 'Automation-first',
       description:
         'We don\'t add automation later — we design for it from day one.',
     },
     {
-      icon: 'LineChart',
       title: 'Transparent delivery',
       description:
         'Regular updates, clear metrics, no surprises. You always know where your project stands.',
     },
     {
-      icon: 'Rocket',
       title: 'Fast onboarding',
       description:
         'Our team is ready to integrate with your workflow within days, not months.',
@@ -101,25 +96,21 @@ export const missionStatement =
 
 export const values = [
   {
-    icon: 'ShieldCheck',
     title: 'Quality without compromise',
     description:
       'Quality is not a phase — it\'s how we think from first line to last deploy. We hold every engagement to the same standard, regardless of timeline pressure.',
   },
   {
-    icon: 'MessageSquare',
     title: 'Honest communication',
     description:
       'We say what we mean, report what we see, and never hide behind jargon. If something is at risk, you\'ll hear it from us before it becomes a problem.',
   },
   {
-    icon: 'TrendingUp',
     title: 'Continuous improvement',
     description:
       'We test, learn, and improve — in our clients\' codebases and in our own processes. Standing still isn\'t an option when the industry keeps moving.',
   },
   {
-    icon: 'Handshake',
     title: 'Partnership over service',
     description:
       'We\'re not a vendor. We\'re an extension of your team. We care about your outcomes, not just our deliverables.',

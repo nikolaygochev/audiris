@@ -8,31 +8,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50:  '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          500: '#059669',
-          600: '#047857',
-          700: '#065f46',
-          900: '#064e3b',
+        field:    '#F4F6F8',
+        graphite: '#1E2329',
+        dim:      '#4A525C',
+        haze:     '#8A93A0',
+        pupil:    '#0F1433',
+        iris: {
+          50:  '#ECEBF7',
+          100: '#D9D7F0',
+          300: '#A29FDB',
+          500: '#3D3A9E',
+          600: '#322F86',
         },
-        accent: {
-          400: '#fbbf24',
-          500: '#f59e0b',
+        focus: {
+          300: '#7FD3DD',
+          500: '#1FA3B5',
         },
       },
       fontFamily: {
-        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
-      },
-      animation: {
-        'fade-up': 'fadeUp 0.4s ease-out forwards',
+        sans:    ['var(--font-instrument)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-bricolage)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
-        fadeUp: {
-          '0%':   { opacity: '0', transform: 'translateY(16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        focusPull: {
+          '0%':   { opacity: '0', filter: 'blur(10px)', transform: 'scale(1.06)' },
+          '100%': { opacity: '1', filter: 'blur(0)',    transform: 'scale(1)' },
         },
+      },
+      animation: {
+        'focus-pull': 'focusPull 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both',
       },
     },
   },

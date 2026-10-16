@@ -5,13 +5,17 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { RingMarker } from '@/components/ui/Iris'
 import { serviceList } from '@/lib/services'
 
 const navLinks = [
   { label: 'About',        href: '/about' },
-  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Case studies', href: '/case-studies' },
   { label: 'Contact',      href: '/contact' },
 ]
+
+const activeDot =
+  'after:absolute after:-bottom-0.5 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-iris-500'
 
 export function Navbar() {
   const [scrolled,     setScrolled]     = useState(false)
@@ -33,13 +37,12 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        scrolled ? 'bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+        scrolled ? 'bg-field/90 backdrop-blur-md border-b border-graphite/10' : 'bg-transparent'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" aria-label="Main navigation">
 
-        {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.svg" alt="Audiris" className="h-8 w-auto" />
@@ -48,13 +51,12 @@ export function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
 
-          {/* Services dropdown */}
           <div className="relative">
             <button
-              className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              className={`relative flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
                 pathname.startsWith('/services')
-                  ? 'text-brand-600'
-                  : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50'
+                  ? `text-iris-500 ${activeDot}`
+                  : 'text-graphite hover:text-iris-500'
               }`}
               onClick={() => setServicesOpen(o => !o)}
               onBlur={() => setTimeout(() => setServicesOpen(false), 150)}
@@ -66,13 +68,14 @@ export function Navbar() {
             </button>
 
             {servicesOpen && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-slate-200 py-2 z-10">
-                {serviceList.map(s => (
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-sm border border-graphite/10 shadow-[0_12px_32px_-12px_rgba(15,20,51,0.25)] py-2 z-10">
+                {serviceList.map((s, i) => (
                   <Link
                     key={s.id}
                     href={s.slug}
-                    className="block px-4 py-2.5 text-sm text-slate-700 hover:text-brand-600 hover:bg-brand-50 transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-graphite hover:text-iris-500 hover:bg-iris-50 transition-colors"
                   >
+                    <RingMarker index={i} className="h-5 w-5" />
                     {s.name}
                   </Link>
                 ))}
@@ -84,10 +87,8 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors relative ${
-                isActive(link.href)
-                  ? 'text-brand-600 after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:bg-brand-500 after:rounded-full'
-                  : 'text-slate-700 hover:text-brand-600 hover:bg-slate-50'
+              className={`relative px-3 py-2 text-sm font-medium transition-colors ${
+                isActive(link.href) ? `text-iris-500 ${activeDot}` : 'text-graphite hover:text-iris-500'
               }`}
             >
               {link.label}
@@ -95,13 +96,12 @@ export function Navbar() {
           ))}
 
           <div className="ml-4">
-            <Button href="/contact" size="sm">Get in touch</Button>
+            <Button href="/contact" size="sm">Talk to us</Button>
           </div>
         </div>
 
-        {/* Hamburger */}
         <button
-          className="md:hidden p-2 rounded-md text-slate-700 hover:bg-slate-100 transition-colors"
+          className="md:hidden p-2 rounded-full text-graphite hover:bg-graphite/5 transition-colors"
           onClick={() => setMobileOpen(o => !o)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -110,36 +110,36 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-white flex flex-col pt-16">
-          <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-2">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Services</p>
-            {serviceList.map(s => (
+        <div className="md:hidden fixed inset-0 z-40 bg-field flex flex-col pt-16">
+          <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-1">
+            <p className="text-sm text-dim mb-2">Services</p>
+            {serviceList.map((s, i) => (
               <Link
                 key={s.id}
                 href={s.slug}
-                className="block px-3 py-3 text-slate-800 font-medium rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
+                className="flex items-center gap-3 px-1 py-3 text-lg font-display font-medium text-graphite hover:text-iris-500 transition-colors"
               >
+                <RingMarker index={i} />
                 {s.name}
               </Link>
             ))}
 
-            <hr className="my-4 border-slate-200" />
+            <hr className="my-4 border-graphite/10" />
 
             {navLinks.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block px-3 py-3 text-slate-800 font-medium rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
+                className="block px-1 py-3 text-lg font-display font-medium text-graphite hover:text-iris-500 transition-colors"
               >
                 {link.label}
               </Link>
             ))}
 
             <div className="mt-6">
-              <Button href="/contact" size="lg" className="w-full justify-center">
-                Get in touch
+              <Button href="/contact" size="lg" className="w-full">
+                Talk to us
               </Button>
             </div>
           </div>

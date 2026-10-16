@@ -1,36 +1,37 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { Card }            from '@/components/ui/Card'
-import { services }        from '@/lib/services'
+import { ArrowUpRight } from 'lucide-react'
+import { RingMarker }   from '@/components/ui/Iris'
+import { services, serviceList } from '@/lib/services'
 import type { ServiceData } from '@/lib/services'
 
 export function RelatedServices({ service }: { service: ServiceData }) {
   const related = service.relatedIds.map(id => services[id])
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-field border-t border-graphite/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <h2 className="text-2xl font-bold text-slate-900 mb-8">You may also be interested in</h2>
-        </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {related.map((rel, i) => (
-            <AnimatedSection key={rel.id} delay={i * 0.1}>
-              <Card hover>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{rel.name}</h3>
-                <p className="text-sm text-slate-600 mb-4">{rel.shortDescription}</p>
-                <Link
-                  href={rel.slug}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700 group"
-                >
-                  Learn more
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              </Card>
-            </AnimatedSection>
+        <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-graphite mb-8">
+          You may also be interested in
+        </h2>
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {related.map(rel => (
+            <li key={rel.id}>
+              <Link
+                href={rel.slug}
+                className="group flex items-start gap-5 h-full bg-white rounded-sm border border-graphite/10 p-6 transition-colors hover:border-iris-300"
+              >
+                <RingMarker index={serviceList.findIndex(s => s.id === rel.id)} className="h-10 w-10" />
+                <div className="flex-1">
+                  <h3 className="font-display text-xl font-semibold text-graphite group-hover:text-iris-500 transition-colors">
+                    {rel.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-dim leading-relaxed">{rel.shortDescription}</p>
+                </div>
+                <ArrowUpRight className="h-5 w-5 text-haze group-hover:text-iris-500 transition-colors" aria-hidden="true" />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )

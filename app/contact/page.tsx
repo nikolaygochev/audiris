@@ -14,39 +14,28 @@ export const metadata: Metadata = buildMetadata({
 
 export default function ContactPage() {
   return (
-    <>
-      {/* Hero */}
-      <section className="py-20 bg-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">{contactPage.title}</h1>
-          <p className="text-xl text-slate-300 max-w-xl mx-auto">{contactPage.subtitle}</p>
-        </div>
-      </section>
+    <section className="pt-14 pb-24 bg-field">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="font-display text-[2.75rem] sm:text-6xl font-semibold text-graphite tracking-[-0.03em] leading-[1.05]">
+          {contactPage.title}
+        </h1>
+        <p className="mt-5 text-xl text-dim max-w-xl leading-relaxed">{contactPage.subtitle}</p>
 
-      {/* Form + sidebar */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-            {/* Form — 2/3 width */}
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Send us a message</h2>
-              <ContactForm />
-            </div>
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-16">
+          <div className="bg-white rounded-sm border border-graphite/10 p-6 sm:p-10">
+            <h2 className="font-display text-2xl font-semibold text-graphite mb-8">Send us a message</h2>
+            <ContactForm />
+          </div>
 
-            {/* Sidebar — 1/3 width */}
-            <div className="space-y-8">
-              <BookingSection />
-
-              <div className="pt-2">
-                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-6">
-                  Other ways to reach us
-                </h3>
-                <ContactInfo />
-              </div>
+          <div className="space-y-10">
+            <BookingSection />
+            <div>
+              <h3 className="font-display text-lg font-semibold text-graphite mb-6">Other ways to reach us</h3>
+              <ContactInfo />
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

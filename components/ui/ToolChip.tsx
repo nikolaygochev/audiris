@@ -4,8 +4,8 @@ interface ToolChipProps {
 
 export function ToolChip({ name }: ToolChipProps) {
   return (
-    <div className="flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 shadow-sm hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 transition-colors duration-200">
+    <span className="inline-flex items-center rounded-full border border-graphite/15 bg-white px-4 py-2 text-sm text-dim transition-colors duration-200 hover:border-iris-500 hover:text-iris-500">
       {name}
-    </div>
+    </span>
   )
 }

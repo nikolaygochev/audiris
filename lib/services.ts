@@ -57,7 +57,7 @@ export const services: Record<ServiceId, ServiceData> = {
     name: 'QA & Testing',
     icon: 'ShieldCheck',
     shortDescription:
-      'Comprehensive manual and functional testing that catches defects before they reach production.',
+      'Comprehensive manual and functional testing, including AI and LLM features, that catches defects before they reach production.',
     hero: {
       title: 'QA & Testing',
       subtitle:
@@ -70,11 +70,12 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     solution: {
       title: 'How we help',
-      body: 'We embed a structured QA process into your delivery cycle — from requirements analysis to production verification. Our QA engineers design test strategies tailored to your product, execute thorough test plans, and provide clear, actionable defect reports that your developers can act on immediately.',
+      body: 'We embed a structured QA process into your delivery cycle — from requirements analysis to production verification. Our QA engineers design test strategies tailored to your product, execute thorough test plans, and provide clear, actionable defect reports that your developers can act on immediately. For products with AI features, we also evaluate model outputs for accuracy, consistency, and safety — and check that a model or prompt update hasn\'t quietly made things worse.',
       outcomes: [
         'Defect escape rate reduced by up to 70%',
         'Faster release cycles through shift-left testing',
         'Clear, prioritised defect reports developers can act on immediately',
+        'AI and LLM features evaluated for accuracy, consistency, and safety — not just whether they respond',
       ],
     },
     process: {
@@ -89,7 +90,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Selenium', 'Postman', 'Rest-Assured', 'Java', 'Python', 'Git', 'CI/CD', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence', 'AI Tools', '& more'],
+      items: ['Selenium', 'Postman', 'Rest-Assured', 'Java', 'Python', 'Git', 'CI/CD', 'TestRail', 'Jira', 'Zephyr', 'BrowserStack', 'Charles Proxy', 'Confluence', 'Promptfoo', 'DeepEval', '& more'],
     },
     cta: {
       headline: 'Ready to get started with QA & Testing?',
@@ -117,18 +118,19 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     solution: {
       title: 'How we help',
-      body: 'We design and build test automation frameworks from first principles — choosing the right tools, structuring tests for maintainability, and integrating them into your CI/CD pipeline so feedback arrives in minutes. We also audit and refactor existing automation that has become slow or brittle.',
+      body: 'We design and build test automation frameworks from first principles — choosing the right tools, structuring tests for maintainability, and integrating them into your CI/CD pipeline so feedback arrives in minutes. We also audit and refactor existing automation that has become slow or brittle. Where it saves time, we use AI assistants to draft test cases and test data — every generated test is reviewed by an engineer before it joins the suite.',
       outcomes: [
         'Regression suite running in under 15 minutes on CI',
         'Test maintenance time reduced through the Page Object pattern and shared utilities',
         'Automated smoke tests block broken builds before they reach staging',
+        'Automated evaluation suites for LLM features, run in CI alongside your functional tests',
       ],
     },
     process: {
       title: 'How we work',
       steps: [
         { number: 1, title: 'Audit', description: 'We assess your current automation coverage, tooling, and CI/CD integration to identify gaps and quick wins.' },
-        { number: 2, title: 'Framework design', description: 'We choose the right tools and architecture for your stack — Playwright, Cypress, Appium, or a hybrid approach.' },
+        { number: 2, title: 'Framework design', description: 'We choose the right tools and architecture for your stack — Playwright, Cypress, Appium, or a hybrid approach — plus an evaluation harness if your product includes LLM features.' },
         { number: 3, title: 'Script development', description: 'We write stable, maintainable tests using the Page Object Model or equivalent patterns, with clear naming conventions.' },
         { number: 4, title: 'CI/CD integration', description: 'We wire the suite into your pipeline — GitHub Actions, Jenkins, or your existing CI tooling — with fast feedback loops.' },
         { number: 5, title: 'Maintenance & handover', description: 'We establish a maintenance process and train your team to own and extend the suite independently.' },
@@ -136,7 +138,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'Rest-Assured', 'Java', 'Python', 'Gatling', 'k6', 'Grafana', 'Git', 'CI/CD', 'AWS', 'GitHub Actions', 'Jenkins', 'Docker', 'AI Tools', '& more'],
+      items: ['Playwright', 'Cypress', 'Selenium Grid', 'Appium', 'Rest-Assured', 'Java', 'Python', 'Gatling', 'k6', 'Grafana', 'Git', 'CI/CD', 'AWS', 'GitHub Actions', 'Jenkins', 'Docker', 'Promptfoo', 'GitHub Copilot', '& more'],
     },
     cta: {
       headline: 'Ready to get started with Automation Testing?',
@@ -164,7 +166,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     solution: {
       title: 'How we help',
-      body: 'We bring a full software development capability with QA baked in from the first sprint. Our engineers write code that is readable, testable, and maintainable — and our QA specialists validate each increment before it moves forward. You get software that works correctly, not just code that compiles.',
+      body: 'We bring a full software development capability with QA baked in from the first sprint. Our engineers write code that is readable, testable, and maintainable — and our QA specialists validate each increment before it moves forward. You get software that works correctly, not just code that compiles. When a product includes AI features, we build the evaluation harness alongside them from the first sprint, so model behaviour is tested like any other requirement.',
       outcomes: [
         'Production-ready software delivered with automated test coverage',
         'Technical debt managed proactively through code review and refactoring sprints',
@@ -183,7 +185,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     tools: {
       title: 'Tools & technologies',
-      items: ['React', 'Next.js', 'Node.js', 'Java', 'Spring', 'Python', 'PostgreSQL', 'AWS', 'Git', 'CI/CD', 'Docker', 'GitHub Actions', 'AI Tools', '& more'],
+      items: ['React', 'Next.js', 'Node.js', 'Java', 'Spring', 'Python', 'PostgreSQL', 'AWS', 'Git', 'CI/CD', 'Docker', 'GitHub Actions', 'LLM APIs', '& more'],
     },
     cta: {
       headline: 'Ready to get started with Software Development?',
@@ -211,7 +213,7 @@ export const services: Record<ServiceId, ServiceData> = {
     },
     solution: {
       title: 'How we help',
-      body: 'We provide pre-vetted QA engineers, automation specialists, and developers who integrate into your existing team and workflow. We match skills to your specific stack, handle contracting and compliance, and take responsibility for delivery quality — not just time and materials.',
+      body: 'We provide pre-vetted QA engineers (including specialists in testing AI features), automation specialists, and developers who integrate into your existing team and workflow. We match skills to your specific stack, handle contracting and compliance, and take responsibility for delivery quality — not just time and materials.',
       outcomes: [
         'Engineering capacity live within 1–2 weeks',
         'Engineers matched to your specific stack and methodology',

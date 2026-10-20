@@ -7,7 +7,7 @@ const service = services['automation-testing']
 
 export const metadata: Metadata = buildMetadata({
   title: 'Automation Testing Services',
-  description: 'Scalable test automation frameworks built by Audiris — Playwright, Cypress, CI/CD integration, and fast feedback loops for modern engineering teams.',
+  description: 'Scalable test automation frameworks built by Audiris — Playwright, Cypress, CI/CD integration, automated LLM evaluations, and fast feedback loops for modern engineering teams.',
   path: service.slug,
 })
 

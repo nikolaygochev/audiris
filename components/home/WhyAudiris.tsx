@@ -1,4 +1,4 @@
-import { ShieldCheck, Zap, LineChart, Rocket } from 'lucide-react'
+import { ShieldCheck, Zap, LineChart, ScanSearch } from 'lucide-react'
 import { SectionHeading }  from '@/components/ui/SectionHeading'
 import { whyAudiris } from '@/lib/content'
 
@@ -6,7 +6,7 @@ const iconMap: Record<string, React.ReactNode> = {
   ShieldCheck: <ShieldCheck className="h-7 w-7 text-verify-200" aria-hidden="true" />,
   Zap:         <Zap         className="h-7 w-7 text-verify-200" aria-hidden="true" />,
   LineChart:   <LineChart   className="h-7 w-7 text-verify-200" aria-hidden="true" />,
-  Rocket:      <Rocket      className="h-7 w-7 text-verify-200" aria-hidden="true" />,
+  ScanSearch:  <ScanSearch  className="h-7 w-7 text-verify-200" aria-hidden="true" />,
 }
 
 export function WhyAudiris() {

@@ -7,7 +7,7 @@ const service = services['qa-testing']
 
 export const metadata: Metadata = buildMetadata({
   title: 'QA & Testing Services',
-  description: 'Expert QA and software testing services from Audiris — functional testing, test strategy, and defect management for teams that care about quality.',
+  description: 'Expert QA and software testing services from Audiris — functional testing, AI and LLM feature evaluation, test strategy, and defect management for teams that care about quality.',
   path: service.slug,
 })
 

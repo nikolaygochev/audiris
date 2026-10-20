@@ -5,9 +5,9 @@
 
 export const site = {
   name: 'Audiris',
-  tagline: 'Born in QA. Built for Everything that comes after.',
+  tagline: 'Born in QA. Built for everything that comes after.',
   description:
-    'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services to teams that care about quality.',
+    'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services — including testing for AI-powered features — to teams that care about quality.',
   email: 'hello@audiris.com',
   linkedin: 'https://www.linkedin.com/company/audiris',
   url: 'https://audiris.io',
@@ -17,9 +17,9 @@ export const site = {
 // ── HOME ─────────────────────────────────────────────────────────────────────
 
 export const hero = {
-  headline: 'Born in QA.\nBuilt for Everything that comes after.',
+  headline: 'Born in QA.\nBuilt for everything that comes after.',
   subheadline:
-    'We started as Quality Engineers. Today we deliver QA, Automation, Software Development, and Outsourcing — with the same rigorous mindset that built our reputation.',
+    'We started as Quality Engineers. Today we deliver QA, Automation, Software Development, and Outsourcing — and we test the AI features your product now depends on with the same rigour as everything else.',
   primaryCta:  { label: 'Book a free consultation', href: '/contact' },
   secondaryCta: { label: 'See our services',        href: '/#services' },
 }
@@ -36,7 +36,7 @@ export const socialProof = {
 export const servicesOverview = {
   sectionTitle: 'What we do',
   sectionSubtitle:
-    'From Quality Assurance to full-service software delivery — everything we offer is built on a foundation of Engineering rigour.',
+    'From Quality Assurance to full-service software delivery, including the AI features teams are now adding to their products — everything we offer is built on a foundation of engineering rigour.',
 }
 
 export const whyAudiris = {
@@ -61,10 +61,10 @@ export const whyAudiris = {
         'Regular updates, clear metrics, no surprises. You always know where your project stands.',
     },
     {
-      icon: 'Rocket',
-      title: 'Fast onboarding',
+      icon: 'ScanSearch',
+      title: 'Ready for AI features',
       description:
-        'Our team is ready to integrate with your workflow within days, not months.',
+        'We test AI the way we test everything: clear pass criteria, repeatable evaluations, and a human reviewing the results.',
     },
   ],
 }
@@ -90,7 +90,7 @@ export const companyStory = {
   },
   whereWeAreNow: {
     title: 'Where we are now',
-    body: 'What began as specialist QA and Automation services has evolved into a full-service software consultancy. Our clients kept asking us to do more — and we kept saying yes — because our quality-first approach turns out to be the right foundation for everything: architecture decisions, delivery cadence, team structure, and beyond.',
+    body: 'What began as specialist QA and Automation services has evolved into a full-service software consultancy. Our clients kept asking us to do more — and we kept saying yes — because our quality-first approach turns out to be the right foundation for everything: architecture decisions, delivery cadence, team structure, and beyond. More recently, clients have started asking us to test the AI features they\'re building into their products — and the same discipline applies: clear acceptance criteria, repeatable checks, and honest reporting.',
   },
   pullQuote:
     'Most software companies treat quality as a final step. We started there.',
@@ -149,6 +149,7 @@ export const contactPage = {
     { value: 'automation-testing',   label: 'Automation Testing' },
     { value: 'software-development', label: 'Software Development' },
     { value: 'outsourcing',          label: 'Outsourcing' },
+    { value: 'ai-testing',           label: 'AI / LLM feature testing' },
     { value: 'not-sure',             label: 'Not sure yet' },
   ],
 }

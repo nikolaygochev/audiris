@@ -27,8 +27,8 @@ export const hero = {
 export const socialProof = {
   label: 'Trusted by engineering teams at',
   partners: [
-    { name: 'Naxt',   href: 'https://naxt.io/', logo: '/partners/naxt-mark.jpg', width: 28,  height: 28, showName: true },
-    { name: 'SQA.bg', href: 'https://sqa.bg/',  logo: '/partners/sqa-bg.png',    width: 92,  height: 30, showName: false },
+    { name: 'Naxt',   href: 'https://naxt.io/', logo: '/partners/naxt-mark.jpg', width: 36,  height: 36, showName: true },
+    { name: 'SQA.bg', href: 'https://sqa.bg/',  logo: '/partners/sqa-bg.png',    width: 107, height: 35, showName: false },
   ],
   stats: [
     { value: '10+', label: 'Years of QA expertise' },

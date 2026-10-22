@@ -26,6 +26,10 @@ export const hero = {
 
 export const socialProof = {
   label: 'Trusted by engineering teams at',
+  partners: [
+    { name: 'Naxt',   href: 'https://naxt.io/' },
+    { name: 'SQA.bg', href: 'https://sqa.bg/' },
+  ],
   stats: [
     { value: '10+', label: 'Years of QA expertise' },
     { value: '30+', label: 'Projects delivered' },

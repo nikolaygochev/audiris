@@ -13,9 +13,18 @@ export function SocialProof() {
                   href={partner.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display text-xl font-semibold text-graphite hover:text-iris-500 transition-colors"
+                  className="flex items-center gap-2 font-display text-xl font-semibold text-graphite opacity-90 hover:opacity-100 transition-opacity"
                 >
-                  {partner.name}
+                  {/* multiply blends the JPG's white background into the page colour */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={partner.logo}
+                    width={partner.width}
+                    height={partner.height}
+                    alt={partner.showName ? '' : partner.name}
+                    className="mix-blend-multiply"
+                  />
+                  {partner.showName && partner.name}
                 </a>
               </li>
             ))}

@@ -4,18 +4,27 @@ export function SocialProof() {
   return (
     <section className="border-b border-rule bg-paper py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col sm:flex-row items-center sm:items-baseline gap-3 sm:gap-8">
+        <div className="mb-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-8">
           <p className="text-sm font-medium text-muted">{socialProof.label}</p>
-          <ul className="flex items-baseline gap-8">
+          <ul className="flex items-center gap-10">
             {socialProof.partners.map(partner => (
               <li key={partner.href}>
                 <a
                   href={partner.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display text-xl font-semibold text-ink hover:text-blueprint-500 transition-colors"
+                  className="flex items-center gap-2 font-display text-xl font-semibold text-ink opacity-90 hover:opacity-100 transition-opacity"
                 >
-                  {partner.name}
+                  {/* multiply blends the JPG's white background into the page colour */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={partner.logo}
+                    width={partner.width}
+                    height={partner.height}
+                    alt={partner.showName ? '' : partner.name}
+                    className="mix-blend-multiply"
+                  />
+                  {partner.showName && partner.name}
                 </a>
               </li>
             ))}

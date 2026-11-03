@@ -35,5 +35,8 @@
     "next": {
       "postcss": "$postcss"
     }
+  },
+  "allowScripts": {
+    "unrs-resolver@1.11.1": true
   }
 }

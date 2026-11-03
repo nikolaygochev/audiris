@@ -1,5 +1,4 @@
-import { SectionHeading } from '@/components/ui/SectionHeading'
-import { ToolChip }       from '@/components/ui/ToolChip'
+import { ToolChip } from '@/components/ui/ToolChip'
 import type { ServiceData } from '@/lib/services'
 
 export function ToolsGrid({ service }: { service: ServiceData }) {

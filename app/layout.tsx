@@ -53,9 +53,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="pt-16">{children}</main>
         <Footer />
-        <CookieBanner />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <Analytics domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
+          <>
+            <CookieBanner />
+            <Analytics domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
+          </>
         )}
       </body>
     </html>

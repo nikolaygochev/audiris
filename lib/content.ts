@@ -160,8 +160,11 @@ export const caseStudiesPage = {
 
 // ── PRIVACY POLICY ───────────────────────────────────────────────────────────
 
+// Analytics, the cookie banner and the policy's analytics wording switch on together.
+export const analyticsEnabled = Boolean(process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN)
+
 export const privacyPolicy = {
-  lastUpdated: '30 March 2026',
+  lastUpdated: '3 November 2026',
   intro:
     'Audiris ("we", "us", "our") is committed to protecting your personal data. This policy explains what we collect, why, and how you can exercise your rights.',
   sections: [
@@ -175,11 +178,13 @@ export const privacyPolicy = {
     },
     {
       title: 'Third-party processors',
-      body: 'Your contact form submissions are transmitted via Resend (resend.com), our email delivery provider. Analytics data (if you have consented) is processed by Plausible Analytics or Google Analytics 4. Both providers operate under appropriate data processing agreements.',
+      body: `This website is hosted by Vercel (vercel.com). Contact form submissions are sent via Resend (resend.com), our email delivery provider, and emails to ${site.email} are forwarded to our inbox by ImprovMX (improvmx.com).${analyticsEnabled ? ' If you consent to analytics, anonymised usage data is processed by Plausible Analytics (plausible.io).' : ''} These providers operate under appropriate data processing agreements.`,
     },
     {
       title: 'Cookies and analytics',
-      body: 'We use a cookie consent banner to give you control over tracking. If you click "Accept", we load an analytics script that collects anonymised usage data (page views, referrer, browser). If you click "Decline", no analytics scripts are loaded and no cookies are set. You can change your preference at any time by clearing your browser\'s localStorage.',
+      body: analyticsEnabled
+        ? 'We use a cookie consent banner to give you control over tracking. If you click "Accept", we load an analytics script that collects anonymised usage data (page views, referrer, browser). If you click "Decline", no analytics scripts are loaded and no cookies are set. You can change your preference at any time by clearing your browser\'s localStorage.'
+        : 'This website does not use cookies, analytics, or any other tracking.',
     },
     {
       title: 'Your rights',

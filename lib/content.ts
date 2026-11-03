@@ -9,7 +9,6 @@ export const site = {
   description:
     'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services — including testing for AI-powered features — to teams that care about quality.',
   email: 'hello@audiris.io',
-  linkedin: 'https://www.linkedin.com/company/audiris',
   url: 'https://audiris.io',
   responseTime: 'We respond within 1 business day.',
 }

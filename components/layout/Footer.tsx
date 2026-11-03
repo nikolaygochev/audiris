@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Linkedin, Mail } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { site } from '@/lib/content'
 import { serviceList } from '@/lib/services'
 
@@ -61,17 +61,6 @@ export function Footer() {
                 >
                   <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                   {site.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={site.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm hover:text-field transition-colors"
-                >
-                  <Linkedin className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                  LinkedIn
                 </a>
               </li>
             </ul>

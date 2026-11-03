@@ -39,7 +39,6 @@ const organizationJsonLd = {
   url: site.url,
   logo: `${site.url}/logo-mark.svg`,
   description: site.description,
-  sameAs: [site.linkedin],
   contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: site.email },
 }
 

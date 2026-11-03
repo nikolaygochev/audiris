@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { z } from 'zod'
+import { contactSchema, serviceLabel } from '@/lib/contact'
 
-const schema = z.object({
-  name:     z.string().min(2),
-  company:  z.string().optional(),
-  email:    z.string().email(),
-  service:  z.string().min(1),
-  message:  z.string().min(10),
-  _website: z.string().max(0).optional(), // honeypot
-})
+const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ')
 
 export async function POST(req: NextRequest) {
   let body: unknown
@@ -19,7 +12,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const parsed = schema.safeParse(body)
+  const parsed = contactSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json({ error: 'Validation failed', issues: parsed.error.issues }, { status: 400 })
   }
@@ -32,32 +25,36 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true })
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  const toEmail = process.env.CONTACT_EMAIL ?? 'hello@audiris.com'
+  const apiKey    = process.env.RESEND_API_KEY
+  const toEmail   = process.env.CONTACT_EMAIL
+  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'Audiris Website <noreply@audiris.io>'
 
-  if (!apiKey) {
-    console.error('RESEND_API_KEY not configured')
+  if (!apiKey || !toEmail) {
+    console.error('Contact form not configured: RESEND_API_KEY and CONTACT_EMAIL are required')
     return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
   }
 
   const resend = new Resend(apiKey)
+  const safeName    = oneLine(name)
+  const safeCompany = company ? oneLine(company) : ''
 
   try {
-    await resend.emails.send({
-      from: 'Audiris Website <noreply@audiris.com>',
+    const { error } = await resend.emails.send({
+      from: fromEmail,
       to:   toEmail,
       replyTo: email,
-      subject: `New enquiry from ${name}${company ? ` (${company})` : ''}`,
+      subject: `New enquiry from ${safeName}${safeCompany ? ` (${safeCompany})` : ''}`,
       text: [
-        `Name: ${name}`,
-        company ? `Company: ${company}` : '',
+        `Name: ${safeName}`,
+        safeCompany ? `Company: ${safeCompany}` : '',
         `Email: ${email}`,
-        `Service: ${service}`,
+        `Service: ${serviceLabel(service)}`,
         '',
         `Message:`,
         message,
       ].filter(Boolean).join('\n'),
     })
+    if (error) throw error
 
     return NextResponse.json({ ok: true })
   } catch (err) {

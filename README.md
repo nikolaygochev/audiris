@@ -60,7 +60,8 @@ Copy `.env.example` to `.env.local` and fill in the values:
 |----------|----------|-------------|
 | `RESEND_API_KEY` | Yes | API key from [resend.com](https://resend.com/api-keys) |
 | `CONTACT_EMAIL` | Yes | Email address that receives form submissions |
-| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | No | Your domain registered in Plausible |
+| `CONTACT_FROM_EMAIL` | No | Sender address, on a domain verified in Resend — defaults to `Audiris Website <noreply@audiris.io>` |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | No | Your domain registered in Plausible — the script only loads after a visitor accepts cookies |
 | `NEXT_PUBLIC_CALENDLY_URL` | No | Calendly booking URL — shows email fallback if unset |
 
 > **Security:** Never commit `.env.local`. It is gitignored.

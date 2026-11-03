@@ -4,6 +4,7 @@ import './globals.css'
 import { Navbar }       from '@/components/layout/Navbar'
 import { Footer }       from '@/components/layout/Footer'
 import { CookieBanner } from '@/components/layout/CookieBanner'
+import { Analytics }    from '@/components/layout/Analytics'
 import { site }         from '@/lib/content'
 
 const bricolage = Bricolage_Grotesque({
@@ -31,23 +32,32 @@ export const metadata: Metadata = {
   },
 }
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/logo-mark.svg`,
+  description: site.description,
+  sameAs: [site.linkedin],
+  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: site.email },
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${bricolage.variable} ${instrument.variable}`}>
-      <head>
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-            src="https://plausible.io/js/script.js"
-          />
-        )}
-      </head>
       <body className="font-sans text-graphite bg-field">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Navbar />
         <main className="pt-16">{children}</main>
         <Footer />
         <CookieBanner />
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
+          <Analytics domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
+        )}
       </body>
     </html>
   )

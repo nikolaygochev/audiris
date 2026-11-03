@@ -8,7 +8,7 @@ export function ServiceCTA({ service }: { service: ServiceData }) {
         <h2 className="font-display text-3xl md:text-[2.5rem] md:leading-[1.1] font-semibold tracking-tight text-field max-w-2xl">
           {service.cta.headline}
         </h2>
-        <Button href="/contact" variant="white" size="lg" className="self-start lg:self-auto">
+        <Button href={`/contact?service=${service.id}`} variant="white" size="lg" className="self-start lg:self-auto">
           {service.cta.buttonLabel}
         </Button>
       </div>

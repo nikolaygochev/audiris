@@ -62,7 +62,7 @@ export const services: Record<ServiceId, ServiceData> = {
       title: 'QA & Testing',
       subtitle:
         'Confidence in every release — from functional testing to exploratory QA, we ensure your software works the way it should.',
-      cta: { label: 'Talk to an expert', href: '/contact' },
+      cta: { label: 'Talk to an expert', href: '/contact?service=qa-testing' },
     },
     problem: {
       title: 'The challenge',
@@ -110,7 +110,7 @@ export const services: Record<ServiceId, ServiceData> = {
       title: 'Automation Testing',
       subtitle:
         'Ship faster with confidence — we build automation frameworks that catch regressions in minutes, not days.',
-      cta: { label: 'Talk to an expert', href: '/contact' },
+      cta: { label: 'Talk to an expert', href: '/contact?service=automation-testing' },
     },
     problem: {
       title: 'The challenge',
@@ -158,7 +158,7 @@ export const services: Record<ServiceId, ServiceData> = {
       title: 'Software Development',
       subtitle:
         'We build production-ready software — designed for scale, tested for reliability, and delivered on time.',
-      cta: { label: 'Talk to an expert', href: '/contact' },
+      cta: { label: 'Talk to an expert', href: '/contact?service=software-development' },
     },
     problem: {
       title: 'The challenge',
@@ -205,7 +205,7 @@ export const services: Record<ServiceId, ServiceData> = {
       title: 'Outsourcing',
       subtitle:
         'Scale your engineering capacity on demand — pre-vetted specialists, fast onboarding, flexible contracts.',
-      cta: { label: 'Talk to an expert', href: '/contact' },
+      cta: { label: 'Talk to an expert', href: '/contact?service=outsourcing' },
     },
     problem: {
       title: 'The challenge',

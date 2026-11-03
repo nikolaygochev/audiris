@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 
-const STORAGE_KEY = 'audiris-cookie-consent'
+export const STORAGE_KEY = 'audiris-cookie-consent'
+export const CONSENT_EVENT = 'audiris:consent'
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false)
@@ -17,8 +18,7 @@ export function CookieBanner() {
   const accept = () => {
     localStorage.setItem(STORAGE_KEY, 'accepted')
     setVisible(false)
-    // Plausible fires automatically once the script is loaded.
-    // For GA4 you would push to dataLayer here.
+    window.dispatchEvent(new Event(CONSENT_EVENT))
   }
 
   const decline = () => {

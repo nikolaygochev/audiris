@@ -8,7 +8,7 @@ export const site = {
   tagline: 'Born in QA. Built for everything that comes after.',
   description:
     'Audiris is an IT and software consultancy delivering QA, Automation Testing, Software Development, and Outsourcing services — including testing for AI-powered features — to teams that care about quality.',
-  email: 'hello@audiris.com',
+  email: 'hello@audiris.io',
   linkedin: 'https://www.linkedin.com/company/audiris',
   url: 'https://audiris.io',
   responseTime: 'We respond within 1 business day.',
@@ -139,7 +139,7 @@ export const contactPage = {
   formSuccess:
     'Thank you! We\'ll be in touch within 1 business day.',
   formError:
-    'Something went wrong. Please email us directly at hello@audiris.com',
+    'Something went wrong. Please email us directly at',
   serviceOptions: [
     { value: 'qa-testing',           label: 'QA & Testing' },
     { value: 'automation-testing',   label: 'Automation Testing' },
@@ -184,7 +184,7 @@ export const privacyPolicy = {
     },
     {
       title: 'Your rights',
-      body: 'Under GDPR you have the right to access, correct, or delete your personal data. To exercise any of these rights, email us at hello@audiris.com. We will respond within 30 days.',
+      body: `Under GDPR you have the right to access, correct, or delete your personal data. To exercise any of these rights, email us at ${site.email}. We will respond within 30 days.`,
     },
     {
       title: 'Data retention',
@@ -192,7 +192,7 @@ export const privacyPolicy = {
     },
     {
       title: 'Contact',
-      body: 'For data protection enquiries, contact hello@audiris.com.',
+      body: `For data protection enquiries, contact ${site.email}.`,
     },
   ],
 }

@@ -1,32 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-
-export const STORAGE_KEY = 'audiris-cookie-consent'
-export const CONSENT_EVENT = 'audiris:consent'
+import { useConsent, setConsent } from '@/lib/consent'
 
 export function CookieBanner() {
-  const [visible, setVisible] = useState(false)
+  const consent = useConsent()
 
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (!stored) setVisible(true)
-  }, [])
+  // Only ask once the client has read storage and found no answer yet.
+  if (consent !== null) return null
 
-  const accept = () => {
-    localStorage.setItem(STORAGE_KEY, 'accepted')
-    setVisible(false)
-    window.dispatchEvent(new Event(CONSENT_EVENT))
-  }
-
-  const decline = () => {
-    localStorage.setItem(STORAGE_KEY, 'declined')
-    setVisible(false)
-  }
-
-  if (!visible) return null
+  const accept  = () => setConsent('accepted')
+  const decline = () => setConsent('declined')
 
   return (
     <div

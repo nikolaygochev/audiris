@@ -29,8 +29,12 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close mobile nav on route change
-  useEffect(() => { setMobileOpen(false) }, [pathname])
+  // Close the mobile nav when the route changes (adjusted during render, not in an effect).
+  const [lastPathname, setLastPathname] = useState(pathname)
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname)
+    setMobileOpen(false)
+  }
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)

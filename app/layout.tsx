@@ -44,7 +44,7 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrument.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${bricolage.variable} ${instrument.variable}`}>
       <body className="font-sans text-graphite bg-field">
         <script
           type="application/ld+json"

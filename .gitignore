@@ -45,3 +45,9 @@ yarn-error.log*
 
 # Testing
 coverage/
+test-results/
+
+# Local performance benchmark output
+perf/
+run.log
+results.tsv

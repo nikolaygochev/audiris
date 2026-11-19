@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Audiris">
+  <!-- LinkedIn company logo with the company name: off-white mark and wordmark on iris-500. -->
+  <!-- Square, full bleed. LinkedIn rounds the corners itself. The wordmark needs Bricolage Grotesque. -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&amp;display=block');
+    .wordmark {
+      font-family: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-size: 84px;
+      font-weight: 700;
+      letter-spacing: -0.023em;
+    }
+  </style>
+  <rect width="400" height="400" fill="#3D3A9E"/>
+  <!-- Same geometry as public/logo-mark.svg, scaled 3.5x. -->
+  <g transform="translate(123 66) scale(3.5)" fill="none" stroke="#F4F6F8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="2" y1="44" x2="22" y2="4"/>
+    <line x1="22" y1="4" x2="42" y2="44"/>
+    <polyline points="11,26 23,26 27,32 36,18"/>
+  </g>
+  <text class="wordmark" x="200" y="322" text-anchor="middle" fill="#F4F6F8">Audiris</text>
+</svg>

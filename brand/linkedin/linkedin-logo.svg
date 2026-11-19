@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Audiris">
+  <!-- LinkedIn company logo: the Audiris mark (capital A with checkmark crossbar) on iris-500. -->
+  <!-- Square, full bleed. LinkedIn rounds the corners itself. -->
+  <rect width="400" height="400" fill="#3D3A9E"/>
+  <!-- Same geometry as public/logo-mark.svg, scaled 5.4x and optically centred. -->
+  <g transform="translate(81.2 66) scale(5.4)" fill="none" stroke="#F4F6F8" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="2" y1="44" x2="22" y2="4"/>
+    <line x1="22" y1="4" x2="42" y2="44"/>
+    <polyline points="11,26 23,26 27,32 36,18"/>
+  </g>
+</svg>
